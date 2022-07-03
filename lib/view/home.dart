@@ -184,7 +184,8 @@ class Home extends StatelessWidget {
   }
 
   _gridBody(context,categoryIndex){
-    return Container(
+    int listLength = introController.categoriesList[categoryIndex].subCategories.length;
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
       child: GridView.builder(
         shrinkWrap: true,
@@ -195,38 +196,52 @@ class Home extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
         ),
-        itemCount: introController.categoriesList[categoryIndex].subCategories.length,
+        itemCount: listLength < 5 ? listLength : 6,
         itemBuilder: (context, index){
-          return Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Container(
-                    // width: MediaQuery.of(context).size.width * 0.5,
-                    // height: MediaQuery.of(context).size.width * 0.5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(introController.categoriesList[categoryIndex].subCategories[index].image)
-                      )
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                      introController.categoriesList[categoryIndex].subCategories[index].title,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                )
-              ],
-            ),
-          );
+          return index == 3
+              ? Container(width: 100,height: 100,color: Colors.red,)
+              : _subCategory(context, index, categoryIndex);
         },
+      ),
+    );
+  }
+
+  _subCategory(context,index ,categoryIndex){
+    return SizedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 7,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                    introController.categoriesList[categoryIndex].subCategories[index].image,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(
+              introController.categoriesList[categoryIndex].subCategories[index].title,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          )
+        ],
       ),
     );
   }

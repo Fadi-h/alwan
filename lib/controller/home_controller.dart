@@ -1,3 +1,4 @@
+import 'package:alwan/controller/intro_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -18,6 +19,7 @@ class HomeController extends GetxController{
       duration: const Duration(milliseconds: 1000)
     );
   }
+
 
 
 
