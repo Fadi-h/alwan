@@ -108,8 +108,9 @@ class MainClass extends StatelessWidget {
           child: PageView(
             controller: mainClassController.pageController,
             onPageChanged: (index){
-              mainClassController.selectedIndex.value = index;
+              //mainClassController.selectedIndex.value = index;
             },
+            physics: NeverScrollableScrollPhysics(),
             children: [
               Home(),
               OrderPage(),

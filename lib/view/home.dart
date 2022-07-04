@@ -1,10 +1,14 @@
 import 'package:alwan/controller/home_controller.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/view/all_subCategory.dart';
+import 'package:alwan/view/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
+
 
 class Home extends StatelessWidget {
 
@@ -69,7 +73,7 @@ class Home extends StatelessWidget {
           const SizedBox(height: 10),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 50,
+            height: 40,
             decoration: BoxDecoration(
               color: Colors.grey.withOpacity(0.2),
               borderRadius: BorderRadius.circular(20)
@@ -81,7 +85,7 @@ class Home extends StatelessWidget {
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 hintText: 'Search',
-                hintStyle: const TextStyle(fontSize: 15)
+                hintStyle: const TextStyle(fontSize: 14)
               ),
             ),
           ),
@@ -132,14 +136,13 @@ class Home extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width * 0.9,
-      height: 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Category', style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold, color: Theme.of(context).disabledColor)),
-          SizedBox(
-            height: 50,
+          Container(
+            height: 35,
             child: ScrollablePositionedList.builder(
               scrollDirection: Axis.horizontal,
               itemScrollController: homeController.itemScrollController,
@@ -163,7 +166,7 @@ class Home extends StatelessWidget {
                                style: homeController.categoryIndex.value == index
                                  ? Theme.of(context).textTheme.headline2
                                    : TextStyle(
-                                 fontSize: 18,
+                                 fontSize: 16,
                                  fontWeight:  homeController.categoryIndex.value == index ? FontWeight.bold : null,
                                  color:  homeController.categoryIndex.value == index ? Colors.black : App.grey,
                                ),
@@ -198,8 +201,22 @@ class Home extends StatelessWidget {
         ),
         itemCount: listLength < 5 ? listLength : 6,
         itemBuilder: (context, index){
-          return index == 3
-              ? Container(width: 100,height: 100,color: Colors.red,)
+          return index == 5
+              ?
+         Bounce(
+             child:  Container(
+                 width: 100,height: 100,color: Colors.transparent,
+                 child: Center(
+                     child: Text(
+                         'See more',
+                         style: Theme.of(context).textTheme.headline1
+                     )
+                 )
+             ),
+             duration: const Duration(milliseconds: 150),
+             onPressed: (){
+               Get.to(()=>AllSubCategory());
+             })
               : _subCategory(context, index, categoryIndex);
         },
       ),
@@ -207,41 +224,50 @@ class Home extends StatelessWidget {
   }
 
   _subCategory(context,index ,categoryIndex){
-    return SizedBox(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 7,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                    introController.categoriesList[categoryIndex].subCategories[index].image,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    }
+    return GestureDetector(
+      onTap: (){
+         Get.to(()=>ProductDetails(introController.categoriesList[categoryIndex].subCategories[index]));
+      },
+      child: SizedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 6,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Hero(
+                    transitionOnUserGestures: true,
+                    tag: introController.categoriesList[categoryIndex].subCategories[index],
+                    child: Image.network(
+                        introController.categoriesList[categoryIndex].subCategories[index].image,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        }
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              introController.categoriesList[categoryIndex].subCategories[index].title,
-              style: Theme.of(context).textTheme.headline1,
-            ),
-          )
-        ],
+            Expanded(
+              flex: 1,
+              child: Text(
+                introController.categoriesList[categoryIndex].subCategories[index].title,
+                style: Theme.of(context).textTheme.headline1,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

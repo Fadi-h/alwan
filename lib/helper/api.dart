@@ -27,7 +27,7 @@ class Api {
   }
 
   static Future getStartUpData() async {
-    var request = http.Request('GET', Uri.parse(url + 'api/start-up'));
+    var request = http.Request('GET', Uri.parse(url + 'api/new/start-up'));
 
     http.StreamedResponse response = await request.send();
 
