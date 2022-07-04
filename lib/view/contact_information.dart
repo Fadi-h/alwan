@@ -1,8 +1,14 @@
+import 'package:alwan/controller/intro_controller.dart';
+import 'package:alwan/helper/myTheme.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ContactInformation extends StatelessWidget {
-  const ContactInformation({Key? key}) : super(key: key);
+
+  IntroController introController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -11,65 +17,78 @@ class ContactInformation extends StatelessWidget {
         // color: Colors.red,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.4,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                      'assets/icons/color_design.png'
-                  ),
+        child: CarouselSlider.builder(
+          options: CarouselOptions(
+            height: MediaQuery.of(context).size.height,
+            viewportFraction: 1,
+          ),
+          itemCount: introController.customerServiceList.length,
+          itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
+            return Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  // decoration: BoxDecoration(
+                  //     image: DecorationImage(
+                  //       fit: BoxFit.cover,
+                  //         image: NetworkImage(introController.customerServiceList[itemIndex].image)
+                  //     )
+                  // ),
+                  child: Shimmer.fromColors(
+                      baseColor: Colors.red,
+                      highlightColor: Colors.yellow,
+                      child: Image.network(introController.customerServiceList[itemIndex].image)),
                 ),
-              ),
-              // child: Image.asset('assets/icons/white_design.png',fit: BoxFit.cover),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.4,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  colorFilter:
-                  ColorFilter.mode(Colors.white.withOpacity(0.2),
-                      BlendMode.dstATop),
-                  image: AssetImage(
-                    'assets/icons/white_design.png',
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.45,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: !MyTheme.isDarkTheme.value ? AssetImage(
+                                  'assets/icons/white_design.png'
+                              )
+                              :  AssetImage(
+                                  'assets/icons/black_design.png'
+                              ),
+                            ),
+                          ),
+                          // child: Image.asset('assets/icons/white_design.png',fit: BoxFit.cover),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                                introController.customerServiceList[itemIndex].name,
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            Text(
+                                introController.customerServiceList[itemIndex].language,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              // child: Image.asset('assets/icons/white_design.png',fit: BoxFit.cover),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.4,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  colorFilter:
-                  ColorFilter.mode(Colors.black.withOpacity(0.8),
-                      BlendMode.dstATop),
-                  image: AssetImage(
-                      'assets/icons/black_design.png'
-                  ),
-                ),
-              ),
-              // child: Image.asset('assets/icons/white_design.png',fit: BoxFit.cover),
-            ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: MediaQuery.of(context).size.height * 0.4,
-            //   child: Image.asset('assets/icons/black_design.png',fit: BoxFit.cover),
-            // ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: MediaQuery.of(context).size.height * 0.4,
-            //   child: Image.asset('assets/icons/color_design.png',fit: BoxFit.cover),
-            // ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

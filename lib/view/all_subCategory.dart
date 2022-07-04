@@ -106,8 +106,8 @@ class AllSubCategory extends StatelessWidget {
                 ),
                 Container(
                   color: Colors.transparent,
-                  width: MediaQuery.of(context).size.width * 0.08,
-                  height: MediaQuery.of(context).size.width * 0.08,
+                  width: MediaQuery.of(context).size.width * 0.07,
+                  height: MediaQuery.of(context).size.width * 0.07,
                   child: SvgPicture.asset(
                       'assets/icons/filter_icon.svg',
                     color: Theme.of(context).disabledColor,

@@ -38,6 +38,7 @@ dependencies:
   flutter_image_slideshow: any
   scrollable_positioned_list:
   flutter_bounce: ^1.1.0
+  shimmer: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
