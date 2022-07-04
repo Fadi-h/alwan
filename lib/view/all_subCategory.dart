@@ -88,7 +88,7 @@ class AllSubCategory extends StatelessWidget {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.65,
-                  height: MediaQuery.of(context).size.width * 0.12,
+                  height: 40,
                   decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20)

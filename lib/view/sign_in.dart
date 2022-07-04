@@ -1,6 +1,7 @@
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/sign_in_controller.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/view/contact_information.dart';
 import 'package:alwan/view/main_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -219,71 +220,85 @@ class _SignInState extends State<SignIn> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // GestureDetector(
+              //   onTap: (){
+              //     signInController.showWhatsAppList.value = !signInController.showWhatsAppList.value;
+              //   },
+              //   child: AnimatedContainer(
+              //     duration: const Duration(milliseconds: 400),
+              //     width: signInController.showWhatsAppList.value ? 200 : 60,
+              //     height: 60,
+              //     decoration: BoxDecoration(
+              //       color: App.darkGrey,
+              //      //shape: BoxShape.circle
+              //       borderRadius: BorderRadius.circular(30)
+              //     ),
+              //     child: Center(
+              //       child: AnimatedSwitcher(
+              //         duration: const Duration(milliseconds: 400),
+              //         child: signInController.showWhatsAppList.value
+              //             ? ListView.builder(
+              //             scrollDirection: Axis.horizontal,
+              //             itemCount: introController.customerServiceList.length+1,
+              //             itemBuilder: (context, index){
+              //             return index==0?
+              //             GestureDetector(
+              //               onTap: (){
+              //                 signInController.showWhatsAppList.value = false;
+              //               },
+              //               child: Container(
+              //                 width: 50,
+              //                 height: 50,
+              //                 decoration: BoxDecoration(
+              //                     color: App.darkGrey,
+              //                     shape: BoxShape.circle
+              //                 ),
+              //                 child: Center(
+              //                     child: SizedBox(
+              //                         width: 35,
+              //                         height: 35,
+              //                         child: AnimatedSwitcher(
+              //                           duration: const Duration(milliseconds: 400),
+              //                           child: signInController.showWhatsAppList.value ? const Icon(Icons.keyboard_backspace,color: Colors.white,size: 30,): SvgPicture.asset('assets/icons/whatsapp.svg'),
+              //                         )
+              //                     )
+              //                 ),
+              //               ),
+              //             )
+              //                 :Container(
+              //               margin: const EdgeInsets.symmetric(horizontal: 10),
+              //               width: 50,
+              //               height: 50,
+              //               child: Center(
+              //                   child: Image.network(introController.customerServiceList[index-1].image, fit: BoxFit.cover,)
+              //               ),
+              //             );
+              //           },
+              //         )
+              //             : SizedBox(
+              //           width: 35,
+              //           height: 35,
+              //           child: AnimatedSwitcher(
+              //             duration: const Duration(milliseconds: 400),
+              //             child:  SvgPicture.asset('assets/icons/whatsapp.svg'),
+              //           )
+              //         ),
+              //       )
+              //     ),
+              //   ),
+              // ),
               GestureDetector(
                 onTap: (){
-                  signInController.showWhatsAppList.value = !signInController.showWhatsAppList.value;
+                  Get.to(()=>ContactInformation());
                 },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 400),
-                  width: signInController.showWhatsAppList.value ? 200 : 60,
+                child: Container(
+                  width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: App.darkGrey,
-                   //shape: BoxShape.circle
-                    borderRadius: BorderRadius.circular(30)
+                      color: App.darkGrey,
+                      shape: BoxShape.circle
                   ),
-                  child: Center(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 400),
-                      child: signInController.showWhatsAppList.value
-                          ? ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: introController.customerServiceList.length+1,
-                          itemBuilder: (context, index){
-                          return index==0?
-                          GestureDetector(
-                            onTap: (){
-                              signInController.showWhatsAppList.value = false;
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: App.darkGrey,
-                                  shape: BoxShape.circle
-                              ),
-                              child: Center(
-                                  child: SizedBox(
-                                      width: 35,
-                                      height: 35,
-                                      child: AnimatedSwitcher(
-                                        duration: const Duration(milliseconds: 400),
-                                        child: signInController.showWhatsAppList.value ? const Icon(Icons.keyboard_backspace,color: Colors.white,size: 30,): SvgPicture.asset('assets/icons/whatsapp.svg'),
-                                      )
-                                  )
-                              ),
-                            ),
-                          )
-                              :Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            width: 50,
-                            height: 50,
-                            child: Center(
-                                child: Image.network(introController.customerServiceList[index-1].image, fit: BoxFit.cover,)
-                            ),
-                          );
-                        },
-                      )
-                          : SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 400),
-                          child:  SvgPicture.asset('assets/icons/whatsapp.svg'),
-                        )
-                      ),
-                    )
-                  ),
+                  child: Center(child: SvgPicture.asset('assets/icons/whatsapp.svg',width: 35,height: 35,)),
                 ),
               ),
               Container(
