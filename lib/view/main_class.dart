@@ -5,6 +5,7 @@ import 'package:alwan/view/home.dart';
 import 'package:alwan/view/notification.dart';
 import 'package:alwan/view/order.dart';
 import 'package:alwan/view/profile.dart';
+import 'package:alwan/view/settings.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -114,8 +115,8 @@ class MainClass extends StatelessWidget {
             children: [
               Home(),
               OrderPage(),
-              NotificationPage(),
               Profile(),
+              Settings()
             ],
           ),
         ),

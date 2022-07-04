@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="375" height="340" viewBox="0 0 375 340">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_8075" data-name="Rectangle 8075" width="375" height="340" transform="translate(8198.783 -16159)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="sound-wave" d="M0,92.438a149.33,149.33,0,0,1,71.6,3.123,137.088,137.088,0,0,1,30.177,12.785c8.639,5.173,15.976,12.3,26.272,15.323,9.7,2.83,19.29.878,28.284-2.635,16.686-6.539,33.017-14.542,51.6-8.1,16.8,5.758,27.692,19.617,39.29,30.548,10.177,9.565,22.84,18.446,38.935,19.129,30.177,1.366,46.745-23.131,65.68-38.356,21.3-17.08,50.887-31.232,81.419-24.888,3.787.781,7.574,1.952,10.532,4.1V-48.75H0V92.438Z" transform="translate(5740.129 -14837.704)" fill="#3a3a3a" opacity="0.06"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_456" data-name="Mask Group 456" transform="translate(-8198.783 16159)" clip-path="url(#clip-path)">
+    <rect id="Rectangle_8073" data-name="Rectangle 8073" width="375" height="319.848" transform="translate(8198.783 -16138.926)" fill="#181817"/>
+    <g id="Mask_Group_454" data-name="Mask Group 454" transform="translate(2389.871 -1387.039)" clip-path="url(#clip-path-2)">
+      <rect id="Rectangle_8074" data-name="Rectangle 8074" width="375" height="319.848" transform="translate(5808.912 -14771.886)" fill="#262627"/>
+    </g>
+    <ellipse id="Ellipse_3160" data-name="Ellipse 3160" cx="51" cy="50.5" rx="51" ry="50.5" transform="translate(8202 -15881.99)" fill="#bed62f" opacity="0.64" style="mix-blend-mode: color;isolation: isolate"/>
+    <ellipse id="Ellipse_3161" data-name="Ellipse 3161" cx="59.797" cy="59" rx="59.797" ry="59" transform="translate(8312.405 -16021.99)" fill="#0072bc" opacity="0.64" style="mix-blend-mode: color;isolation: isolate"/>
+    <circle id="Ellipse_3162" data-name="Ellipse 3162" cx="65" cy="65" r="65" transform="translate(8447 -16041.99)" fill="#ec008c" opacity="0.45" style="mix-blend-mode: color;isolation: isolate"/>
+    <circle id="Ellipse_3163" data-name="Ellipse 3163" cx="48" cy="48" r="48" transform="translate(8428 -15911.99)" fill="#ffcb06" opacity="0.64" style="mix-blend-mode: color;isolation: isolate"/>
+    <ellipse id="Ellipse_3164" data-name="Ellipse 3164" cx="47.436" cy="46.5" rx="47.436" ry="46.5" transform="translate(8228.563 -16057.99)" fill="#a3228e" opacity="0.45" style="mix-blend-mode: color;isolation: isolate"/>
+  </g>
+</svg>

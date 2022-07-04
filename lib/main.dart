@@ -2,10 +2,14 @@ import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/intro.dart';
 import 'package:alwan/view/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 void main() {
   runApp( MyApp());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: MyTheme.isDarkTheme.value ? Colors.black : Colors.white,
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -34,6 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       themeMode: myTheme.value.myTheme,
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
