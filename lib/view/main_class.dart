@@ -1,5 +1,7 @@
+import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/main_class_controller.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/helper/global.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/home.dart';
 import 'package:alwan/view/order.dart';
@@ -39,10 +41,12 @@ class MainClass extends StatelessWidget {
                 ),
               ),
               title: Text(
-                  'Home',
+                  App_Localization.of(context).translate("home"),
                 style: TextStyle(
                   color: mainClassController.selectedIndex.value == 0
-                    ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,),
+                    ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,
+                    fontSize: Global.langCode == "en" ? 15 : 10
+                ),
               ),
               activeColor: App.pink,
               textAlign: TextAlign.center
@@ -58,7 +62,7 @@ class MainClass extends StatelessWidget {
                 ),
               ),
                 title: Text(
-                  'Orders',
+                  App_Localization.of(context).translate("orders"),
                   style: TextStyle(
                     color: mainClassController.selectedIndex.value == 1
                         ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,),
@@ -77,10 +81,12 @@ class MainClass extends StatelessWidget {
                 ),
               ),
                 title: Text(
-                  'Profile',
+                  App_Localization.of(context).translate("profile"),
                   style: TextStyle(
                     color: mainClassController.selectedIndex.value == 2
-                        ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,),
+                        ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,
+                  fontSize: Global.langCode == "en" ? 15 : 12
+                  ),
                 ),
               activeColor: App.pink,
                 textAlign: TextAlign.center
@@ -93,7 +99,7 @@ class MainClass extends StatelessWidget {
                     ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,
               ),
                 title: Text(
-                  'Settings',
+                  App_Localization.of(context).translate("settings"),
                   style: TextStyle(
                     color: mainClassController.selectedIndex.value == 3
                         ? MyTheme.isDarkTheme.value ? Colors.white : App.pink : App.grey,),

@@ -1,6 +1,9 @@
+import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/all_subCategory_controller.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/helper/myTheme.dart';
+import 'package:alwan/view/home.dart';
 import 'package:alwan/view/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
@@ -20,29 +23,26 @@ class AllSubCategory extends StatelessWidget {
         body: SafeArea(
           child: Stack(
             children: [
-              // Container(
-              //     width: MediaQuery.of(context).size.width,
-              //     height: MediaQuery.of(context).size.height,
-              //     decoration: const BoxDecoration(
-              //         image: DecorationImage(
-              //             fit: BoxFit.cover,
-              //             image: AssetImage('assets/image/background.png')
-              //         )
-              //     )
-              // ),
+              MyTheme.isDarkTheme.value ? Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/image/background.png')
+                      )
+                  )
+              ) : Text(''),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    SingleChildScrollView(
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 200),
-                        child: _gridBody(context, allSubCategoryController.categoryIndex.value),
-                      ),
-                    ),
-                    _header(context),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _header(context),
+                      const SizedBox(height: 20),
+                      _gridBody(context, allSubCategoryController.categoryIndex.value),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -58,14 +58,18 @@ class AllSubCategory extends StatelessWidget {
       height: 190,//MediaQuery.of(context).size.height * 0.25,
       padding: const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: MyTheme.isDarkTheme.value ? Colors.transparent : Colors.white,
         boxShadow: [
+          MyTheme.isDarkTheme.value ?
+          BoxShadow(
+            color: App.darkGrey.withOpacity(0.2),
+          ) :
           BoxShadow(
             color: Theme.of(context).dividerColor.withOpacity(0.3),
             spreadRadius: 3,
             blurRadius: 10,
             offset: const Offset(0, 1),
-          ),
+          )
         ],
       ),
       child: Column(
@@ -76,31 +80,47 @@ class AllSubCategory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.13,
-                  height: MediaQuery.of(context).size.width * 0.13,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/icons/logo2.png')
-                      )
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.13,
+                    height: MediaQuery.of(context).size.width * 0.13,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/icons/logo2.png')
+                        )
+                    ),
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.65,
-                  height: 40,
                   decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(20)
+                      borderRadius: BorderRadius.circular(25)
                   ),
                   child: TextField(
-                    style: Theme.of(context).textTheme.headline4,
+                    style: TextStyle(
+                        color: MyTheme.isDarkTheme.value ?
+                        Colors.white.withOpacity(0.2) :
+                        Colors.grey,
+                      fontSize: 16
+                    ),
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search, color: Theme.of(context).dividerColor,),
+                        prefixIcon: Icon(Icons.search,
+                            color: MyTheme.isDarkTheme.value ?
+                            Colors.white:
+                            App.darkGrey),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(fontSize: 14)
+                        hintText: App_Localization.of(context).translate("search"),
+                        hintStyle: TextStyle(fontSize: 16,
+                            color: MyTheme.isDarkTheme.value ?
+                            Colors.white.withOpacity(0.2) :
+                            Colors.grey
+                        )
                     ),
                   ),
                 ),
@@ -122,7 +142,6 @@ class AllSubCategory extends StatelessWidget {
       ),
     );
   }
-
   _categoryBar(context){
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
@@ -131,7 +150,8 @@ class AllSubCategory extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Category', style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold, color: Theme.of(context).disabledColor)),
+          Text(App_Localization.of(context).translate("category"),
+              style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold, color: Theme.of(context).disabledColor)),
           Container(
             height: 40,
             child: ScrollablePositionedList.builder(
@@ -176,7 +196,6 @@ class AllSubCategory extends StatelessWidget {
       ),
     );
   }
-
   _gridBody(context,categoryIndex){
     int listLength = introController.categoriesList[categoryIndex].subCategories.length;
     return Container(
@@ -198,7 +217,6 @@ class AllSubCategory extends StatelessWidget {
       ),
     );
   }
-
   _subCategory(context,index ,categoryIndex){
     return GestureDetector(
       onTap: (){
@@ -235,11 +253,17 @@ class AllSubCategory extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 5),
             Expanded(
               flex: 1,
               child: Text(
-                introController.categoriesList[categoryIndex].subCategories[index].title,
-                style: Theme.of(context).textTheme.headline1,
+                  introController.categoriesList[categoryIndex].subCategories[index].title,
+                  maxLines: 1,
+                  style: TextStyle(
+                      color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
+                      fontSize: 20,
+                      overflow: TextOverflow.ellipsis
+                  )
               ),
             )
           ],

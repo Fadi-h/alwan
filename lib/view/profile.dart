@@ -1,8 +1,10 @@
+import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/ProfileController.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/main_class_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
+import 'package:alwan/view/address.dart';
 import 'package:alwan/view/invoice.dart';
 import 'package:alwan/view/settings.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +22,28 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       body: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _header(context),
-                const SizedBox(height: 10),
-                _body(context)
-              ],
+        child: Stack(
+          children: [
+            MyTheme.isDarkTheme.value ? Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/image/background.png')
+                    )
+                )
+            ) : Text(''),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _header(context),
+                  const SizedBox(height: 10),
+                  _body(context)
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     ));
@@ -42,14 +55,21 @@ class Profile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(height: 10),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.17,
-            height: MediaQuery.of(context).size.width * 0.17,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/icons/logo2.png')
-                )
+          GestureDetector(
+            onTap: () {
+              mainClassController.selectedIndex.value = 0;
+              mainClassController.pageController.animateToPage(0,
+                  duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.17,
+              height: MediaQuery.of(context).size.width * 0.17,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/icons/logo2.png')
+                  )
+              ),
             ),
           ),
         ],
@@ -117,7 +137,14 @@ class Profile extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-               //Get.to(() => Invoice());
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => InvoicePage(),
+                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                    transitionDuration: Duration(milliseconds: 500),
+                  ),
+                );
               },
               child: Container(
                 color: Colors.transparent,
@@ -129,11 +156,18 @@ class Profile extends StatelessWidget {
                       width: 30,
                       height: 30,
                       child: SvgPicture.asset("assets/icons/invoice.svg",
-                          color: Theme.of(context).disabledColor
+                          color: MyTheme.isDarkTheme.value ? Colors.white :
+                          Colors.black
                       ),
                     ),
-                    Center(child: Text("My Invoice",
-                        style: Theme.of(context).textTheme.headline2)
+                    Center(child: Text(App_Localization.of(context).translate("my_invoice"),
+                        style: TextStyle(
+                          color: MyTheme.isDarkTheme.value ? Colors.white :
+                          Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold
+                        )
+                    )
 
                     )
                   ],
@@ -142,31 +176,54 @@ class Profile extends StatelessWidget {
             ),
           ),
           VerticalDivider(
-            color: Theme.of(context).disabledColor,
+            color: MyTheme.isDarkTheme.value ? Colors.white :
+            Colors.black,
             width: 1,
             thickness: 1,
           ),
           Expanded(
-            child: Container(
-              color: Colors.transparent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: SvgPicture.asset("assets/icons/address.svg",
-                        color: Theme.of(context).disabledColor,
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => Addresses(),
+                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                    transitionDuration: Duration(milliseconds: 500),
                   ),
-                  Center(child: Text("My Addresses",style: Theme.of(context).textTheme.headline2))
-                ],
+                );
+              },
+              child: Container(
+                color: Colors.transparent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      child: SvgPicture.asset("assets/icons/address.svg",
+                          color: MyTheme.isDarkTheme.value ? Colors.white :
+                          Colors.black
+                      ),
+                    ),
+                    Center(child: Text(App_Localization.of(context).translate("my_address"),
+                        style: TextStyle(
+                            color: MyTheme.isDarkTheme.value ? Colors.white :
+                            Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                        )
+                    )
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           VerticalDivider(
-            color: Theme.of(context).disabledColor,
+            color: MyTheme.isDarkTheme.value ? Colors.white :
+            Colors.black,
             width: 1,
             thickness: 1,
           ),
@@ -187,10 +244,19 @@ class Profile extends StatelessWidget {
                       width: 30,
                       height: 30,
                       child: SvgPicture.asset("assets/icons/setting.svg",
-                          color: Theme.of(context).disabledColor,
+                          color: MyTheme.isDarkTheme.value ? Colors.white :
+                          Colors.black,
                       ),
                     ),
-                    Center(child: Text("Settings",style: Theme.of(context).textTheme.headline2))
+                    Center(child: Text(App_Localization.of(context).translate("settings"),
+                        style: TextStyle(
+                            color: MyTheme.isDarkTheme.value ? Colors.white :
+                            Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                        )
+                    )
+                    )
                   ],
                 ),
               ),
@@ -224,9 +290,11 @@ class Profile extends StatelessWidget {
                     Icon(Icons.call,
                       color: Theme.of(context).backgroundColor
                     ),
-                    Center(child: Text("Connect With Us",style: TextStyle(
+                    Center(child: Text(App_Localization.of(context).translate("connect_with_us"),
+                        style: TextStyle(
                       fontSize: 18,
-                      color: Theme.of(context).backgroundColor
+                      color: Theme.of(context).backgroundColor,
+                      fontWeight: FontWeight.bold
                     )))
                   ],
                 ),
@@ -253,9 +321,11 @@ class Profile extends StatelessWidget {
                           color: Theme.of(context).backgroundColor
                       ),
                     ),
-                    Center(child: Text("Help",style: TextStyle(
+                    Center(child: Text(App_Localization.of(context).translate("help"),
+                        style: TextStyle(
                         fontSize: 18,
-                        color: Theme.of(context).backgroundColor
+                        color: Theme.of(context).backgroundColor,
+                        fontWeight: FontWeight.bold
                     )))
                   ],
                 ),
@@ -280,7 +350,8 @@ class Profile extends StatelessWidget {
               width: 22,
               height: 22,
               child: SvgPicture.asset("assets/icons/instagram.svg",
-                  color: Theme.of(context).disabledColor
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
               ),
             ),
           ),
@@ -292,7 +363,8 @@ class Profile extends StatelessWidget {
               width: 22,
               height: 22,
               child: SvgPicture.asset("assets/icons/twitter.svg",
-                  color: Theme.of(context).disabledColor
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
               ),
             ),
           ),
@@ -304,7 +376,8 @@ class Profile extends StatelessWidget {
               width: 22,
               height: 22,
               child: SvgPicture.asset("assets/icons/facebook.svg",
-                  color: Theme.of(context).disabledColor
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
               ),
             ),
           ),
@@ -316,7 +389,8 @@ class Profile extends StatelessWidget {
               width: 22,
               height: 22,
               child: SvgPicture.asset("assets/icons/youtube.svg",
-                  color: Theme.of(context).disabledColor
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
               ),
             ),
           )
@@ -336,16 +410,18 @@ class Profile extends StatelessWidget {
                 onTap:() {
                   //todo
                 },
-                child: Text("Privace Policy",
+                child: Text(App_Localization.of(context).translate("privacy_policy"),
                   style: TextStyle(
-                      color: Theme.of(context).disabledColor,
+                      color: MyTheme.isDarkTheme.value ? Colors.white :
+                      Colors.black,
                       fontSize: 11,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
               Text(".",style: TextStyle(
-                  color: Theme.of(context).disabledColor,
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
                   fontSize: 12,
                   fontWeight: FontWeight.bold
               ),),
@@ -353,16 +429,18 @@ class Profile extends StatelessWidget {
                 onTap:() {
                   //todo
                 },
-                child: Text("Terms Of Sale",
+                child: Text(App_Localization.of(context).translate("terms_of_sale"),
                   style: TextStyle(
-                      color: Theme.of(context).disabledColor,
+                      color: MyTheme.isDarkTheme.value ? Colors.white :
+                      Colors.black,
                       fontSize: 11,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
               Text(".",style: TextStyle(
-                  color: Theme.of(context).disabledColor,
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
                   fontSize: 12,
                   fontWeight: FontWeight.bold
               ),),
@@ -370,9 +448,10 @@ class Profile extends StatelessWidget {
                 onTap:() {
                   //todo
                 },
-                child: Text("Terms Of Use",
+                child: Text(App_Localization.of(context).translate("terms_of_use"),
                   style: TextStyle(
-                      color: Theme.of(context).disabledColor,
+                      color: MyTheme.isDarkTheme.value ? Colors.white :
+                      Colors.black,
                       fontSize: 11,
                       fontWeight: FontWeight.bold
                   ),
@@ -391,16 +470,18 @@ class Profile extends StatelessWidget {
                 onTap:() {
                   //todo
                 },
-                child: Text("Return Policy",
+                child: Text(App_Localization.of(context).translate("return_policy"),
                   style: TextStyle(
-                      color: Theme.of(context).disabledColor,
+                      color: MyTheme.isDarkTheme.value ? Colors.white :
+                      Colors.black,
                       fontSize: 11,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
               Text(".",style: TextStyle(
-                  color: Theme.of(context).disabledColor,
+                  color: MyTheme.isDarkTheme.value ? Colors.white :
+                  Colors.black,
                   fontSize: 12,
                   fontWeight: FontWeight.bold
               ),),
@@ -408,9 +489,10 @@ class Profile extends StatelessWidget {
                 onTap:() {
                   //todo
                 },
-                child: Text("Warranty Policy",
+                child: Text(App_Localization.of(context).translate("warranty_policy"),
                   style: TextStyle(
-                      color: Theme.of(context).disabledColor,
+                      color: MyTheme.isDarkTheme.value ? Colors.white :
+                      Colors.black,
                       fontSize: 11,
                       fontWeight: FontWeight.bold
                   ),
@@ -422,7 +504,8 @@ class Profile extends StatelessWidget {
         SizedBox(height: 20,),
         Text("© 2018ALWAN. ALL RIGHTS RESERVED.",
           style: TextStyle(
-              color: Theme.of(context).disabledColor,
+              color: MyTheme.isDarkTheme.value ? Colors.white :
+              Colors.black,
               fontSize: 11,
               fontWeight: FontWeight.bold
           ),

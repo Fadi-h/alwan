@@ -1,7 +1,9 @@
+import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/sign_in_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/view/contact_information.dart';
+import 'package:alwan/view/forget_password.dart';
 import 'package:alwan/view/main_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -101,7 +103,7 @@ class _SignInState extends State<SignIn> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(width: 1, color: Colors.white),
               ),
-              label: const Text('User ID', style: TextStyle(color: Colors.white))
+              label: Text(App_Localization.of(context).translate("email"), style: TextStyle(color: Colors.white))
             ),
           ),
         ),
@@ -135,18 +137,26 @@ class _SignInState extends State<SignIn> {
                   borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(width: 1, color: Colors.white),
                 ),
-                label: const Text('Password', style: TextStyle(color: Colors.white))
+                label: Text(App_Localization.of(context).translate("password"), style: TextStyle(color: Colors.white))
             ),
           ),
         ),
         const SizedBox(height: 10),
         GestureDetector(
           onTap: (){
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (c, a1, a2) => ForgetPassword(),
+                transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                transitionDuration: Duration(milliseconds: 500),
+              ),
+            );
           },
           child: Container(
             height: 25,
             color: Colors.transparent,
-            child: Text('Forget Password?',style: TextStyle(fontSize: 16,color: Colors.white),),
+            child: Text(App_Localization.of(context).translate("forget_password"),style: TextStyle(fontSize: 16,color: Colors.white),),
           ),
         ),
         const SizedBox(height: 30),
@@ -161,8 +171,9 @@ class _SignInState extends State<SignIn> {
               color: App.pink,
               borderRadius: BorderRadius.circular(10)
             ),
-            child: const Center(
-              child: Text('SIGN IN',style: TextStyle(color: Colors.white,fontSize: 18)),
+            child:  Center(
+              child: Text(App_Localization.of(context).translate("sign_in").toUpperCase(),
+                  style: TextStyle(color: Colors.white,fontSize: 18)),
             ),
           ),
         ),
@@ -178,8 +189,9 @@ class _SignInState extends State<SignIn> {
                 color: App.darkGrey,
                 borderRadius: BorderRadius.circular(10)
             ),
-            child: const Center(
-              child: Text('LOGIN AS GUEST',style: TextStyle(color: Colors.white,fontSize: 18)),
+            child:  Center(
+              child: Text(App_Localization.of(context).translate("login_us_guest").toUpperCase(),
+                  style: TextStyle(color: Colors.white,fontSize: 18)),
             ),
           ),
         ),
@@ -193,19 +205,19 @@ class _SignInState extends State<SignIn> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-         // margin: const EdgeInsets.only(bottom: 60),
-          child: Text('Don\'t have an account?',style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 14),),
+          child: Text(App_Localization.of(context).translate("don't_have_account"),
+            style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 14),),
         ),
         const SizedBox(width: 5),
         GestureDetector(
           onTap: (){
-            print('eeeee');
+            // print('eeeee');
             signInController.signUpOption.value = true;
           },
           child: Container(
             color: Colors.transparent,
           //  margin: const EdgeInsets.only(bottom: 60),
-            child: Text('Sign up',style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 16,decoration: TextDecoration.underline),),
+            child: Text(App_Localization.of(context).translate("sign_up"),style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 16,decoration: TextDecoration.underline),),
           ),
         ),
       ],
