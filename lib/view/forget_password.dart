@@ -40,7 +40,7 @@ _header(BuildContext context) {
           Get.back();
         },
         child: Container(
-          margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15),
+          margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15,right: 15),
           height: MediaQuery.of(context).size.height * 0.1,
           child: Icon(Icons.arrow_back_ios_outlined,color: Colors.white,size: 30,),
         ),

@@ -9,7 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
 void main() {
-  ///maya
+  ///to fadi
   runApp( MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: MyTheme.isDarkTheme.value ? Colors.black : Colors.white,

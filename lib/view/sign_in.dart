@@ -301,7 +301,14 @@ class _SignInState extends State<SignIn> {
               // ),
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>ContactInformation());
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (c, a1, a2) => ContactInformation(),
+                      transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                      transitionDuration: Duration(milliseconds: 500),
+                    ),
+                  );
                 },
                 child: Container(
                   width: 60,
@@ -316,7 +323,6 @@ class _SignInState extends State<SignIn> {
               Container(
                 width: 60,
                 height: 60,
-             //   margin: const EdgeInsets.only(bottom: 50),
                 decoration: BoxDecoration(
                     color: App.darkGrey,
                     shape: BoxShape.circle

@@ -69,19 +69,19 @@ class ProductDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Title',style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
-            ),),
-            SizedBox(height: 5,),
-            Text(product.title,style: TextStyle(
-                fontSize: 16,
-                color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
-              ,textAlign: TextAlign.justify,),
-            SizedBox(height: 5,),
-            Divider(height: 20,color: Theme.of(context).dividerColor,),
-            SizedBox(height: 5,),
+            // Text('Title',style: TextStyle(
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //     color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
+            // ),),
+            // SizedBox(height: 5,),
+            // Text(product.title,style: TextStyle(
+            //     fontSize: 16,
+            //     color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
+            //   ,textAlign: TextAlign.justify,),
+            // SizedBox(height: 5,),
+            // Divider(height: 20,color: Theme.of(context).dividerColor,),
+            // SizedBox(height: 5,),
             Text('Description',
               style: TextStyle(
                   fontSize: 20,
