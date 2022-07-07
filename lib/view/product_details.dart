@@ -1,8 +1,8 @@
+import 'package:alwan/app_localization.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/model/start_up.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -17,16 +17,13 @@ class ProductDetails extends StatelessWidget {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Container(
-              height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.bottom,
-              child: Column(
-                children: [
-                 _image(context),
-                 _description(context),
-                ],
-              ),
+          Container(
+            height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.bottom,
+            child: Column(
+              children: [
+               _image(context),
+               _description(context),
+              ],
             ),
           ),
           _contactOption(context),
@@ -38,7 +35,6 @@ class ProductDetails extends StatelessWidget {
 
   _image(context) {
     return  Stack(
-      alignment: Alignment.topLeft,
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
@@ -50,14 +46,15 @@ class ProductDetails extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15),
-            child: const Icon(Icons.arrow_back_ios_outlined,color: Colors.black,size: 30,),
+            margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15,right: 15),
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Icon(Icons.arrow_back_ios_outlined,color: Colors.black,size: 30,),
           ),
-        )
+        ),
       ],
     );
   }
@@ -65,40 +62,42 @@ class ProductDetails extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 20),
       width: MediaQuery.of(context).size.width * 0.9,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Text('Title',style: TextStyle(
-            //     fontSize: 20,
-            //     fontWeight: FontWeight.bold,
-            //     color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
-            // ),),
-            // SizedBox(height: 5,),
-            // Text(product.title,style: TextStyle(
-            //     fontSize: 16,
-            //     color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
-            //   ,textAlign: TextAlign.justify,),
-            // SizedBox(height: 5,),
-            // Divider(height: 20,color: Theme.of(context).dividerColor,),
-            // SizedBox(height: 5,),
-            Text('Description',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(App_Localization.of(context).translate("title"),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
+          ),),
+          SizedBox(height: 5,),
+          Text(product.title,style: TextStyle(
+              fontSize: 16,
+              color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
+            ,textAlign: TextAlign.justify,),
+          SizedBox(height: 5,),
+          Divider(height: 20,color: Theme.of(context).dividerColor,),
+          SizedBox(height: 5,),
+          Text(App_Localization.of(context).translate("description"),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
             ),
-            SizedBox(height: 5,),
-            Container(
-              // height: MediaQuery.of(context).size.height * 0.5,
+          ),
+          SizedBox(height: 5,),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.34,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'+"'"+'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
                 style: TextStyle(fontSize: 16,
-                  color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
+                    color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
                 textAlign: TextAlign.justify,),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
