@@ -12,10 +12,11 @@ class SignInController extends GetxController{
   RxBool signUpOption = false.obs;
   RxBool showPassword = false.obs;
   RxBool showWhatsAppList = false.obs;
+  RxBool showPhoneList = false.obs;
 
-  openWhatApp(BuildContext context,String msg,int index,IntroController introController) async{
+  openWhatApp(BuildContext context,String msg,String phone) async{
     try {
-      var whatsapp = introController.customerServiceList[index].phone;
+      var whatsapp = phone;
       var whatsappURl_android = "whatsapp://send?phone="+whatsapp+"&text=$msg";
       var whatappURL_ios ="https://wa.me/$whatsapp?text=${Uri.parse(msg)}";
       if(Platform.isIOS){
@@ -43,16 +44,16 @@ class SignInController extends GetxController{
       print(e.toString());
     }
   }
-  openPhone(IntroController introController,int index) async{
+  openPhone(String phone) async{
     if(Platform.isAndroid){
       final Uri launchUri = Uri(
         scheme: 'tel',
-        path: introController.customerServiceList[index].phone,
+        path: phone,
       );
       // print(introController.customerServiceList[index].phone);
       await launch(launchUri.toString());
     }else if (Platform.isIOS){
-      launch("tel://${introController.customerServiceList[index].phone}");
+      launch("tel://$phone");
       // print(introController.customerServiceList[index].phone);
     }
   }

@@ -1,12 +1,12 @@
 import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/all_subCategory_controller.dart';
+import 'package:alwan/controller/home_controller.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
-import 'package:alwan/view/home.dart';
 import 'package:alwan/view/product_details.dart';
+import 'package:alwan/view/products_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -15,6 +15,7 @@ class AllSubCategory extends StatelessWidget {
 
   IntroController introController = Get.find();
   AllSubCategoryController allSubCategoryController = Get.put(AllSubCategoryController());
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +221,9 @@ class AllSubCategory extends StatelessWidget {
   _subCategory(context,index ,categoryIndex){
     return GestureDetector(
       onTap: (){
-        Get.to(()=>ProductDetails(introController.categoriesList[categoryIndex].subCategories[index]));
+       // Get.to(()=>ProductDetails(introController.categoriesList[categoryIndex].subCategories[index]));
+        homeController.productIndex.value = introController.categoriesList[categoryIndex].subCategories[index].id;
+        Get.to(()=>ProductList());
       },
       child: SizedBox(
         child: Column(

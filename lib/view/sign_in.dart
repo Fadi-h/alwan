@@ -301,6 +301,7 @@ class _SignInState extends State<SignIn> {
               // ),
               GestureDetector(
                 onTap: (){
+                  signInController.showWhatsAppList.value = true;
                   Navigator.push(
                     context,
                     PageRouteBuilder(
@@ -320,15 +321,28 @@ class _SignInState extends State<SignIn> {
                   child: Center(child: SvgPicture.asset('assets/icons/whatsapp.svg',width: 35,height: 35,)),
                 ),
               ),
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: App.darkGrey,
-                    shape: BoxShape.circle
-                ),
-                child: Center(
-                  child: Icon(Icons.phone,size: 35,color: Colors.white),
+              GestureDetector(
+                onTap: (){
+                  signInController.showPhoneList.value = true;
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (c, a1, a2) => ContactInformation(),
+                      transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                      transitionDuration: const Duration(milliseconds: 500),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                      color: App.darkGrey,
+                      shape: BoxShape.circle
+                  ),
+                  child: Center(
+                    child: Icon(Icons.phone,size: 35,color: Colors.white),
+                  ),
                 ),
               ),
             ],

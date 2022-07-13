@@ -8,6 +8,7 @@ class HomeController extends GetxController{
 
   RxInt categoryIndex = 0.obs;
   ItemScrollController itemScrollController = ItemScrollController();
+  RxInt productIndex = (-1).obs;
 
 
 

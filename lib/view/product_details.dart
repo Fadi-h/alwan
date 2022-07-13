@@ -1,35 +1,52 @@
 import 'package:alwan/app_localization.dart';
+import 'package:alwan/controller/product_details_controller.dart';
+import 'package:alwan/controller/product_list_controller.dart';
+import 'package:alwan/controller/sign_in_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
-import 'package:alwan/model/start_up.dart';
+import 'package:alwan/model/product_list.dart';
+import 'package:alwan/view/contact_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductDetails extends StatelessWidget {
 
-  SubCategories product;
-  ProductDetails(this.product, {Key? key}) : super(key: key);
+  ProductList product;
+  // ProductDetails(this.product, {Key? key}) : super(key: key);
+  ProductDetailsController productDetailsController = Get.put(ProductDetailsController());
+  SignInController signInController = Get.find();
+  ProductDetails(this.product) {
+    productDetailsController.getData(product.id);
+  }
+
+  ProductListController productListController = Get.find();
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.bottom,
-            child: Column(
-              children: [
-               _image(context),
-               _description(context),
-              ],
+    return Obx((){
+      return Scaffold(
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.bottom,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _image(context),
+                    _description(context),
+                  ],
+                ),
+              ),
             ),
-          ),
-          _contactOption(context),
-        ],
-      ),
-    );
+            _contactOption(context),
+          ],
+        ),
+      );
+    });
   }
 
 
@@ -42,7 +59,19 @@ class ProductDetails extends StatelessWidget {
           child: Hero(
             transitionOnUserGestures: true,
             tag: product,
-            child: Image.network(product.image,fit: BoxFit.cover,),
+            child: Image.network(
+              product.image,
+              fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }
+            ),
           ),
         ),
         GestureDetector(
@@ -52,7 +81,7 @@ class ProductDetails extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15,right: 15),
             height: MediaQuery.of(context).size.height * 0.1,
-            child: Icon(Icons.arrow_back_ios_outlined,color: Colors.black,size: 30,),
+            child: const Icon(Icons.arrow_back_ios_outlined,color: Colors.black,size: 30,),
           ),
         ),
       ],
@@ -65,20 +94,66 @@ class ProductDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(App_Localization.of(context).translate("title"),
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
-          ),),
-          SizedBox(height: 5,),
-          Text(product.title,style: TextStyle(
-              fontSize: 16,
-              color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
-            ,textAlign: TextAlign.justify,),
-          SizedBox(height: 5,),
-          Divider(height: 20,color: Theme.of(context).dividerColor,),
-          SizedBox(height: 5,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(App_Localization.of(context).translate("title") + ': ',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
+                      )
+                  ),
+                  Text(product.title,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
+                    ,textAlign: TextAlign.justify,),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(App_Localization.of(context).translate("price") + ': ',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
+                      )
+                  ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: productDetailsController.loading.value ?
+                  Container(
+                    width: 50,
+                    height: 20,
+                    child: Shimmer.fromColors(
+                        baseColor: Colors.grey,
+                        highlightColor:Colors.white,
+                        child:  Container(
+                          width: 50,
+                          height: 20,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                        )
+                    ),
+                  )
+                      : Text(
+                      productDetailsController.productDetails.value.price.toString(),
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
+                      textAlign: TextAlign.justify
+                  ),
+                )
+                ],
+              ),
+            ],
+          ),
+          Divider(height: 30,color: Theme.of(context).dividerColor),
           Text(App_Localization.of(context).translate("description"),
             style: TextStyle(
                 fontSize: 20,
@@ -86,17 +161,49 @@ class ProductDetails extends StatelessWidget {
                 color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black
             ),
           ),
-          SizedBox(height: 5,),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.34,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'+"'"+'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                style: TextStyle(fontSize: 16,
+          const SizedBox(height: 5,),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: productDetailsController.loading.value ?
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 200,
+              child: Shimmer.fromColors(
+                  baseColor: Colors.grey,
+                  highlightColor:Colors.white,
+                  child:  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(5)
+                    ),
+                  )
+              ),
+            )
+            : Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 200,
+              child: SingleChildScrollView(
+                child: Text(
+                productDetailsController.productDetails.value.description,
+                style: TextStyle(
+                    fontSize: 16,
                     color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
-                textAlign: TextAlign.justify,),
+                textAlign: TextAlign.justify
             ),
-          )
+              ),
+            ),
+          ),
+          Divider(height: 30,color: Theme.of(context).dividerColor),
+          // Container(
+          //   height: MediaQuery.of(context).size.height * 0.34,
+          //   child: SingleChildScrollView(
+          //     scrollDirection: Axis.vertical,
+          //     child: Text(productDetailsController.productDetails.value.description,
+          //       style: TextStyle(fontSize: 16,
+          //           color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
+          //       textAlign: TextAlign.justify,),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -111,7 +218,8 @@ class ProductDetails extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: (){
-                //  signInController.showWhatsAppList.value = !signInController.showWhatsAppList.value;
+                 signInController.showWhatsAppList.value = true;
+                 Get.to(()=>ContactInformation());
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 400),
@@ -137,17 +245,23 @@ class ProductDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                width: 60,
-                height: 60,
-                //   margin: const EdgeInsets.only(bottom: 50),
-                decoration: BoxDecoration(
-                    color: MyTheme.isDarkTheme.value ? Colors.white : App.darkGrey,
-                    shape: BoxShape.circle
-                ),
-                child: Center(
-                  child: Icon(Icons.phone,size: 35,
-                    color: MyTheme.isDarkTheme.value ? Colors.black : Colors.white,
+              GestureDetector(
+                onTap: (){
+                  signInController.showPhoneList.value = true;
+                  Get.to(()=>ContactInformation());
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  //   margin: const EdgeInsets.only(bottom: 50),
+                  decoration: BoxDecoration(
+                      color: MyTheme.isDarkTheme.value ? Colors.white : App.darkGrey,
+                      shape: BoxShape.circle
+                  ),
+                  child: Center(
+                    child: Icon(Icons.phone,size: 35,
+                      color: MyTheme.isDarkTheme.value ? Colors.black : Colors.white,
+                    ),
                   ),
                 ),
               ),

@@ -30,5 +30,8 @@
   "done": "تم",
   "dark_mode": "الوضع الليلي",
   "light_mode": "الوضع النهاري",
-  "language": "اللغة"
+  "language": "اللغة",
+  "price" : "السعر",
+  "all_products" : "كل المنتجات"
+
 }

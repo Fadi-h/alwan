@@ -5,6 +5,7 @@ import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/all_subCategory.dart';
 import 'package:alwan/view/product_details.dart';
+import 'package:alwan/view/products_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -155,8 +156,8 @@ class Home extends StatelessWidget {
               color: Theme.of(context).disabledColor
               )
           ),
-          Container(
-            height: 35,
+          SizedBox(
+            height: 45,
             child: ScrollablePositionedList.builder(
               scrollDirection: Axis.horizontal,
               itemScrollController: homeController.itemScrollController,
@@ -217,7 +218,7 @@ class Home extends StatelessWidget {
           return index == 5
               ?
          Bounce(
-             child:  Container(
+             child: Container(
                  width: 100,height: 100,color: Colors.transparent,
                  child: Center(
                      child: Text(
@@ -238,7 +239,9 @@ class Home extends StatelessWidget {
   _subCategory(context,index ,categoryIndex){
     return GestureDetector(
       onTap: (){
-         Get.to(()=>ProductDetails(introController.categoriesList[categoryIndex].subCategories[index]));
+         //Get.to(()=>ProductDetails(introController.categoriesList[categoryIndex].subCategories[index]));
+        homeController.productIndex.value = introController.categoriesList[categoryIndex].subCategories[index].id;
+        Get.to(()=>ProductList());
       },
       child: SizedBox(
         child: Column(

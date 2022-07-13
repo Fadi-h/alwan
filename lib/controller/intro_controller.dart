@@ -11,6 +11,8 @@ class IntroController extends GetxController{
   RxList<CustomerService> customerServiceList = <CustomerService>[].obs;
   RxList<MyBanner> bannerList = <MyBanner>[].obs;
   RxList<SuggestionSearch> searchSuggestionList = <SuggestionSearch>[].obs;
+  RxInt contactIndex = 0.obs;
+
 
   @override
   void onInit(){

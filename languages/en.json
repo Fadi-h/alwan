@@ -30,5 +30,7 @@
   "done": "Done",
   "dark_mode": "Dark Mode",
   "light_mode": "Light Mode",
-  "language": "Language"
+  "language": "Language",
+  "price" : "price",
+  "all_products" : "All products"
 }
