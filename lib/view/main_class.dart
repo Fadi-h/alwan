@@ -26,8 +26,8 @@ class MainClass extends StatelessWidget {
           showElevation: true, // use this to remove appBar's elevation
           onItemSelected: (index) {
             mainClassController.selectedIndex.value = index;
-            mainClassController.pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+            mainClassController.pageController.animateToPage(index, duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+            // mainClassController.pageController.jumpTo(index*MediaQuery.of(context).size.width);
           },
           items: [
             BottomNavyBarItem(
@@ -114,9 +114,10 @@ class MainClass extends StatelessWidget {
           child: PageView(
             controller: mainClassController.pageController,
             onPageChanged: (index){
-              //mainClassController.selectedIndex.value = index;
+            //  print(index);
+             // mainClassController.selectedIndex.value = index;
             },
-            physics: NeverScrollableScrollPhysics(),
+             physics: NeverScrollableScrollPhysics(),
             children: [
               Home(),
               OrderPage(),

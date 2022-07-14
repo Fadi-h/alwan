@@ -64,7 +64,7 @@ class ContactInformation extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15,right: 15),
                           height: MediaQuery.of(context).size.height * 0.1,
-                          child: Icon(Icons.arrow_back_ios_outlined,color: Colors.white,size: 30,),
+                          child: const Icon(Icons.arrow_back_ios_outlined,color: Colors.white,size: 30,),
                         ),
                       ),
                     ],
@@ -73,7 +73,7 @@ class ContactInformation extends StatelessWidget {
               ),
             ),
             Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomCenter,
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -94,13 +94,13 @@ class ContactInformation extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           introController.customerServiceList[introController.contactIndex.value].name,
                           maxLines: 2,
                           style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 22,
                               color:  MyTheme.isDarkTheme.value ?
                               Colors.white : Colors.black,
                               fontWeight: FontWeight.bold
@@ -112,7 +112,7 @@ class ContactInformation extends StatelessWidget {
                               introController.customerServiceList[introController.contactIndex.value].language,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 17,
                             color: MyTheme.isDarkTheme.value ?
                             Colors.white : Colors.black,
                           ),
@@ -127,8 +127,8 @@ class ContactInformation extends StatelessWidget {
                                 activeIndex: introController.contactIndex.value,
                                 count: introController.customerServiceList.length,
                                 effect: SlideEffect(
-                                    dotWidth: 15,
-                                    dotHeight: 15,
+                                    dotWidth: 10,
+                                    dotHeight: 10,
                                     activeDotColor: MyTheme.isDarkTheme.value ?
                                     Colors.white : Colors.black,
                                     dotColor: Colors.grey
@@ -162,7 +162,8 @@ class ContactInformation extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        SizedBox(height: MediaQuery.of(context).viewPadding.bottom),
                       ],
                     ),
                   );

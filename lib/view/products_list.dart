@@ -6,6 +6,7 @@ import 'package:alwan/view/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class ProductList extends StatelessWidget {
 
@@ -50,7 +51,7 @@ class ProductList extends StatelessWidget {
   _header(context){
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
+      padding: const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 15),
       decoration: BoxDecoration(
         color: MyTheme.isDarkTheme.value ? Colors.transparent : Colors.white,
         boxShadow: [
@@ -134,7 +135,7 @@ class ProductList extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           Text(App_Localization.of(context).translate("all_products"),
-              style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,
+              style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
                   color: Theme.of(context).disabledColor
               )
           ),
@@ -152,7 +153,7 @@ class ProductList extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: MediaQuery.of(context).size.shortestSide < 600 ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.3,
-          childAspectRatio: 3 / 4,
+          childAspectRatio: 2 / 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
@@ -176,7 +177,7 @@ class ProductList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 6,
+              flex: 5,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ClipRRect(
@@ -191,8 +192,8 @@ class ProductList extends StatelessWidget {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                            return Center(
+                              child: Lottie.asset('assets/icons/LogoAnimation.json'),
                             );
                           }
                         }
@@ -206,10 +207,10 @@ class ProductList extends StatelessWidget {
               flex: 1,
               child: Text(
                   productListController.productsList[index].title,
-                  maxLines: 1,
+                  maxLines: 2,
                   style: TextStyle(
                       color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
-                      fontSize: 20,
+                      fontSize: 16,
                       overflow: TextOverflow.ellipsis
                   )
               ),

@@ -17,7 +17,7 @@ class _IntroState extends State<Intro> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 0)).then((value){
+    Future.delayed(const Duration(milliseconds: 200)).then((value){
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 2500),

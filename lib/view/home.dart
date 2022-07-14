@@ -3,8 +3,8 @@ import 'package:alwan/controller/home_controller.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
+import 'package:alwan/model/start_up.dart';
 import 'package:alwan/view/all_subCategory.dart';
-import 'package:alwan/view/product_details.dart';
 import 'package:alwan/view/products_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:lottie/lottie.dart';
+
 
 
 class Home extends StatelessWidget {
@@ -63,44 +65,76 @@ class Home extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.17,
-            height: MediaQuery.of(context).size.width * 0.17,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                    image: AssetImage('assets/icons/logo2.png')
-                )
+          GestureDetector(
+            onTap:(){
+
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.17,
+              height: MediaQuery.of(context).size.width * 0.17,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                      image: AssetImage('assets/icons/logo2.png')
+                  )
+              ),
             ),
           ),
           const SizedBox(height: 10),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(25)
-            ),
-            child: TextField(
-              style: TextStyle(
-                color: MyTheme.isDarkTheme.value ?
-                Colors.white.withOpacity(0.2) :
-                Colors.grey,
-                fontSize: 16
+          GestureDetector(
+            onTap: (){
+              showSearch(
+                  context: context,
+                  delegate: SearchTextField(
+                      suggestionList: introController.searchSuggestionList,
+                      homeController: homeController) );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(25)
               ),
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search,
-                  color: MyTheme.isDarkTheme.value ?
-                    Colors.white:
-                    App.darkGrey),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: App_Localization.of(context).translate("search"),
-                hintStyle: TextStyle(fontSize: 16,
-                    color: MyTheme.isDarkTheme.value ?
-                    Colors.white.withOpacity(0.2) :
-                    Colors.grey,
-                )
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Icon(Icons.search),
+                  const SizedBox(width: 10),
+                  Text(
+                      App_Localization.of(context).translate("search"),
+                    style: TextStyle(fontSize: 16,
+                              color: MyTheme.isDarkTheme.value ?
+                              Colors.white.withOpacity(0.2) :
+                              Colors.grey,
+                          )
+                  ),
+                ],
               ),
+              // child: TextField(
+              //   style: TextStyle(
+              //     color: MyTheme.isDarkTheme.value ?
+              //     Colors.white.withOpacity(0.2) :
+              //     Colors.grey,
+              //     fontSize: 16
+              //   ),
+              //   decoration: InputDecoration(
+              //     prefixIcon: Icon(Icons.search,
+              //       color: MyTheme.isDarkTheme.value ?
+              //         Colors.white:
+              //         App.darkGrey),
+              //     border: InputBorder.none,
+              //     focusedBorder: InputBorder.none,
+              //     hintText: App_Localization.of(context).translate("search"),
+              //     hintStyle: TextStyle(fontSize: 16,
+              //         color: MyTheme.isDarkTheme.value ?
+              //         Colors.white.withOpacity(0.2) :
+              //         Colors.grey,
+              //     )
+              //   ),
+              // ),
             ),
           ),
         ],
@@ -138,7 +172,7 @@ class Home extends StatelessWidget {
               )
           ),
         )).toList(),
-        autoPlayInterval: 0,
+        autoPlayInterval: 5000,
         isLoop: true,
       ),
     );
@@ -152,7 +186,7 @@ class Home extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(App_Localization.of(context).translate("category"),
-              style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,
+              style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,
               color: Theme.of(context).disabledColor
               )
           ),
@@ -209,7 +243,7 @@ class Home extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: MediaQuery.of(context).size.shortestSide < 600 ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.3,
-             childAspectRatio: 3 / 4,
+             childAspectRatio: 2 / 3,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
         ),
@@ -229,7 +263,7 @@ class Home extends StatelessWidget {
              ),
              duration: const Duration(milliseconds: 150),
              onPressed: (){
-               Get.to(()=>AllSubCategory());
+               Get.to(()=>AllSubCategory(homeController.categoryIndex.value));
              })
               : _subCategory(context, index, categoryIndex);
         },
@@ -249,7 +283,7 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 6,
+              flex: 5,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ClipRRect(
@@ -264,8 +298,9 @@ class Home extends StatelessWidget {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                            return Center(
+                              child: Lottie.asset('assets/icons/LogoAnimation.json'),
+                              // child: CircularProgressIndicator(),
                             );
                           }
                         }
@@ -274,15 +309,15 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Expanded(
               flex: 1,
               child: Text(
                 introController.categoriesList[categoryIndex].subCategories[index].title,
-                maxLines: 1,
+                maxLines: 2,
                   style: TextStyle(
                   color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
-                  fontSize: 20,
+                  fontSize: 16,
                   overflow: TextOverflow.ellipsis
                 )
               ),
@@ -292,6 +327,115 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
+
+class SearchTextField extends SearchDelegate<String> {
+  final List<SuggestionSearch> suggestionList;
+  String? result;
+  HomeController homeController;
+
+  SearchTextField(
+      {required this.suggestionList, required this.homeController});
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      query.isEmpty
+          ? const Visibility(
+            child: Text(''),
+            visible: false,
+          )
+          : IconButton(
+        icon: const Icon(Icons.search, color: Colors.white,),
+        onPressed: () {
+          close(context, query);
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        Get.back();
+      },
+    );
+  }
 
 
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return super.appBarTheme(context).copyWith(
+      appBarTheme: AppBarTheme(
+        color: App.pink,
+        elevation: 0,
+      ),
+      hintColor: Colors.white,
+      textTheme: const TextTheme(
+        headline6: TextStyle(
+            color: Colors.white
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final suggestions = suggestionList.where((name) {
+      return name.title.toLowerCase().contains(query.toLowerCase());
+    });
+   homeController.getResult(query);
+    close(context, query);
+    return Center(
+      child: CircularProgressIndicator(
+        color: App.pink,
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestions = suggestionList.where((name) {
+      return name.title.toLowerCase().contains(query.toLowerCase());
+    });
+    return Stack(
+      children: [
+        Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/image/background.png')
+                )
+            )
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: MyTheme.isDarkTheme.value ? Colors.transparent : Colors.white, //App.pink,
+          child: ListView.builder(
+            itemCount: suggestions.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(
+                  suggestions.elementAt(index).title,
+                  style: TextStyle(
+                    color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
+                    fontSize: 16
+                  ),
+                ),
+                onTap: () {
+                  query = suggestions.elementAt(index).title;
+                  close(context, query);
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
 }

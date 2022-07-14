@@ -77,8 +77,8 @@ class Profile extends StatelessWidget {
     );
   }
   _body(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.7,
+    return Container(
+      // height: MediaQuery.of(context).size.height * 0.7,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -87,10 +87,11 @@ class Profile extends StatelessWidget {
               _slider(context),
               const SizedBox(height: 30),
               _optionBar(context),
-              const SizedBox(height: 40),
+              const SizedBox(height: 25),
               _contactHelp(context),
             ],
           ),
+          const SizedBox(height: 35),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -137,14 +138,17 @@ class Profile extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (c, a1, a2) => InvoicePage(),
-                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-                    transitionDuration: Duration(milliseconds: 500),
-                  ),
-                );
+                mainClassController.selectedIndex.value = 1;
+                mainClassController.pageController.animateToPage(1,
+                    duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (c, a1, a2) => InvoicePage(),
+                //     transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                //     transitionDuration: Duration(milliseconds: 500),
+                //   ),
+                // );
               },
               child: Container(
                 color: Colors.transparent,
@@ -153,8 +157,8 @@ class Profile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                       child: SvgPicture.asset("assets/icons/invoice.svg",
                           color: MyTheme.isDarkTheme.value ? Colors.white :
                           Colors.black
@@ -164,7 +168,7 @@ class Profile extends StatelessWidget {
                         style: TextStyle(
                           color: MyTheme.isDarkTheme.value ? Colors.white :
                           Colors.black,
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold
                         )
                     )
@@ -175,52 +179,52 @@ class Profile extends StatelessWidget {
               )
             ),
           ),
-          VerticalDivider(
-            color: MyTheme.isDarkTheme.value ? Colors.white :
-            Colors.black,
-            width: 1,
-            thickness: 1,
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (c, a1, a2) => Addresses(),
-                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-                    transitionDuration: Duration(milliseconds: 500),
-                  ),
-                );
-              },
-              child: Container(
-                color: Colors.transparent,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      child: SvgPicture.asset("assets/icons/address.svg",
-                          color: MyTheme.isDarkTheme.value ? Colors.white :
-                          Colors.black
-                      ),
-                    ),
-                    Center(child: Text(App_Localization.of(context).translate("my_address"),
-                        style: TextStyle(
-                            color: MyTheme.isDarkTheme.value ? Colors.white :
-                            Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                        )
-                    )
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // VerticalDivider(
+          //   color: MyTheme.isDarkTheme.value ? Colors.white :
+          //   Colors.black,
+          //   width: 1,
+          //   thickness: 1,
+          // ),
+          // Expanded(
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.push(
+          //         context,
+          //         PageRouteBuilder(
+          //           pageBuilder: (c, a1, a2) => Addresses(),
+          //           transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+          //           transitionDuration: Duration(milliseconds: 500),
+          //         ),
+          //       );
+          //     },
+          //     child: Container(
+          //       color: Colors.transparent,
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //         children: [
+          //           Container(
+          //             width: 30,
+          //             height: 30,
+          //             child: SvgPicture.asset("assets/icons/address.svg",
+          //                 color: MyTheme.isDarkTheme.value ? Colors.white :
+          //                 Colors.black
+          //             ),
+          //           ),
+          //           Center(child: Text(App_Localization.of(context).translate("my_address"),
+          //               style: TextStyle(
+          //                   color: MyTheme.isDarkTheme.value ? Colors.white :
+          //                   Colors.black,
+          //                   fontSize: 16,
+          //                   fontWeight: FontWeight.bold
+          //               )
+          //           )
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
           VerticalDivider(
             color: MyTheme.isDarkTheme.value ? Colors.white :
             Colors.black,
@@ -252,7 +256,7 @@ class Profile extends StatelessWidget {
                         style: TextStyle(
                             color: MyTheme.isDarkTheme.value ? Colors.white :
                             Colors.black,
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold
                         )
                     )
@@ -285,17 +289,20 @@ class Profile extends StatelessWidget {
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.call,
-                      color: Theme.of(context).backgroundColor
+                      color: Theme.of(context).backgroundColor,
                     ),
+                    const SizedBox(width: 10),
                     Center(child: Text(App_Localization.of(context).translate("connect_with_us"),
                         style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 15,
                       color: Theme.of(context).backgroundColor,
                       fontWeight: FontWeight.bold
-                    )))
+                        )
+                      )
+                    )
                   ],
                 ),
               )
@@ -312,18 +319,20 @@ class Profile extends StatelessWidget {
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 30,
-                      height: 30,
+                      width: 28,
+                      height: 28,
                       child: SvgPicture.asset("assets/icons/help.svg",
                           color: Theme.of(context).backgroundColor
                       ),
                     ),
-                    Center(child: Text(App_Localization.of(context).translate("help"),
+                    const SizedBox(width: 10),
+                    Center(
+                        child: Text(App_Localization.of(context).translate("help"),
                         style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Theme.of(context).backgroundColor,
                         fontWeight: FontWeight.bold
                     )))

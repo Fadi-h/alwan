@@ -61,7 +61,7 @@ class Settings extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(App_Localization.of(context).translate("settings"),
-            style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 26),
+            style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 24),
           ),
         ],
       ),
@@ -97,9 +97,9 @@ class Settings extends StatelessWidget {
                   children: [
                     MyTheme.isDarkTheme.value ?
                     Text(App_Localization.of(context).translate("dark_mode"),
-                      style: Theme.of(context).textTheme.bodyText1,) :
+                      style: Theme.of(context).textTheme.headline2,) :
                     Text(App_Localization.of(context).translate("light_mode"),
-                      style: Theme.of(context).textTheme.bodyText1,),
+                      style: Theme.of(context).textTheme.headline2,),
                     Row(
                       children: [
                         MyTheme.isDarkTheme.value ?
@@ -147,9 +147,9 @@ class Settings extends StatelessWidget {
                     children: [
                       Text(App_Localization.of(context).translate("language"),
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1,),
+                        style: Theme.of(context).textTheme.headline2,),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        //width: MediaQuery.of(context).size.width * 0.35,
                         child: ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
@@ -167,7 +167,7 @@ class Settings extends StatelessWidget {
                                 }
                               },
                               child: Container(
-                                width: MediaQuery.of(context).size.width * 0.18,
+                               // width: MediaQuery.of(context).size.width * 0.18,
                                   child: Row(
                                     children: [
                                       Transform.scale(

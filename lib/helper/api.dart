@@ -75,6 +75,32 @@ class Api {
     else {
       return [];
     }
+  }
+
+  static Future<List<ProductList>> getSearchResult(String query) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url + 'api/product/search'));
+    request.body = json.encode({
+      "query": query
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String data = await response.stream.bytesToString();
+      var list = jsonDecode(data) as List;
+      List<ProductList> products = <ProductList>[];
+      for(var c in list){
+        products.add(ProductList.fromMap(c));
+      }
+      return products;
+    }
+    else {
+      return [];
+    }
 
   }
 

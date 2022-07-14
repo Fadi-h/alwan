@@ -9,6 +9,7 @@ import 'package:alwan/view/contact_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -66,8 +67,8 @@ class ProductDetails extends StatelessWidget {
                   if (loadingProgress == null) {
                     return child;
                   } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: Lottie.asset('assets/icons/LogoAnimation.json'),
                     );
                   }
                 }
@@ -94,7 +95,7 @@ class ProductDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
@@ -108,7 +109,7 @@ class ProductDetails extends StatelessWidget {
                   ),
                   Text(product.title,
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey)
                     ,textAlign: TextAlign.justify,),
                 ],
@@ -167,7 +168,7 @@ class ProductDetails extends StatelessWidget {
             child: productDetailsController.loading.value ?
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: 200,
+              height: 150,
               child: Shimmer.fromColors(
                   baseColor: Colors.grey,
                   highlightColor:Colors.white,
@@ -181,19 +182,19 @@ class ProductDetails extends StatelessWidget {
             )
             : Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: 200,
-              child: SingleChildScrollView(
-                child: Text(
-                productDetailsController.productDetails.value.description,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
-                textAlign: TextAlign.justify
+              // height: 200,
+              child: Text(
+              productDetailsController.productDetails.value.description,
+              style: TextStyle(
+                height: 1.2,
+                  fontSize: 16,
+                  color: MyTheme.isDarkTheme.value ? Colors.white.withOpacity(0.5) : App.grey),
+              textAlign: TextAlign.justify,
             ),
-              ),
             ),
           ),
           Divider(height: 30,color: Theme.of(context).dividerColor),
+          const SizedBox(height: 60)
           // Container(
           //   height: MediaQuery.of(context).size.height * 0.34,
           //   child: SingleChildScrollView(

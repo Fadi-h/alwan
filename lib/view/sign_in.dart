@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
     return Obx((){
       return Scaffold(
         body: Stack(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.topCenter,
           children: [
             Container(
                 width: MediaQuery.of(context).size.width,
@@ -49,19 +49,25 @@ class _SignInState extends State<SignIn> {
                     )
                 )
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                //const SizedBox(height: 110,),
-                _titleAnimation(context),
-                _inputTextField(context),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 600),
-                  child: signInController.signUpOption.isTrue
-                      ? _signUpOptions(context)
-                      : _signUpText(),
+            _titleAnimation(context),
+            SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedBox(height: 200),
+                   // _titleAnimation(context),
+                    _inputTextField(context),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 600),
+                      child: signInController.signUpOption.isTrue
+                          ? _signUpOptions(context)
+                          : _signUpText(),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -71,14 +77,16 @@ class _SignInState extends State<SignIn> {
 
   _titleAnimation(context){
     return Container(
-      //margin: EdgeInsets.only(top: 60),
-     // width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.4,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         controller: scrollController,
         child: Container(
-            child: Text('WELCOME',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white.withOpacity(0.05)),)
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Text('Welcome',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white.withOpacity(0.05))
+              ),
+            )
         ),
       ),
     );
@@ -144,6 +152,7 @@ class _SignInState extends State<SignIn> {
         const SizedBox(height: 10),
         GestureDetector(
           onTap: (){
+            FocusManager.instance.primaryFocus?.unfocus();
             Navigator.push(
               context,
               PageRouteBuilder(
@@ -162,6 +171,7 @@ class _SignInState extends State<SignIn> {
         const SizedBox(height: 30),
         GestureDetector(
           onTap: (){
+            FocusManager.instance.primaryFocus?.unfocus();
             Get.to(()=>MainClass());
           },
           child: Container(
@@ -180,6 +190,7 @@ class _SignInState extends State<SignIn> {
         const SizedBox(height: 20),
         GestureDetector(
           onTap: (){
+            FocusManager.instance.primaryFocus?.unfocus();
 
           },
           child: Container(

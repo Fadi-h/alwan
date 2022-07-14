@@ -4,18 +4,21 @@ import 'package:alwan/controller/home_controller.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
-import 'package:alwan/view/product_details.dart';
 import 'package:alwan/view/products_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class AllSubCategory extends StatelessWidget {
 
+  int categoryIndex;
   IntroController introController = Get.find();
-  AllSubCategoryController allSubCategoryController = Get.put(AllSubCategoryController());
   HomeController homeController = Get.find();
+  AllSubCategoryController allSubCategoryController = Get.put(AllSubCategoryController());
+  AllSubCategory(this.categoryIndex){
+    allSubCategoryController.categoryIndex.value = categoryIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +210,7 @@ class AllSubCategory extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: MediaQuery.of(context).size.shortestSide < 600 ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.3,
-          childAspectRatio: 3 / 4,
+          childAspectRatio: 2 / 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
@@ -231,7 +234,7 @@ class AllSubCategory extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 6,
+              flex: 5,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ClipRRect(
@@ -246,8 +249,8 @@ class AllSubCategory extends StatelessWidget {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                            return Center(
+                              child: Lottie.asset('assets/icons/LogoAnimation.json'),
                             );
                           }
                         }
@@ -261,10 +264,10 @@ class AllSubCategory extends StatelessWidget {
               flex: 1,
               child: Text(
                   introController.categoriesList[categoryIndex].subCategories[index].title,
-                  maxLines: 1,
+                  maxLines: 2,
                   style: TextStyle(
                       color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
-                      fontSize: 20,
+                      fontSize: 16,
                       overflow: TextOverflow.ellipsis
                   )
               ),

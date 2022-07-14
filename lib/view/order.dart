@@ -43,7 +43,7 @@ class OrderPage extends StatelessWidget {
       ),
       child: Center(
         child: Text(App_Localization.of(context).translate("orders"),
-          style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 26),
+          style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 24),
         ),
       ),
     );
@@ -63,13 +63,13 @@ class OrderPage extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Text("Sep 23, 2022",
-                  style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 18),
+                  style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 16),
                 ),
               ),
               const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.18,
                 decoration: BoxDecoration(
                   color: MyTheme.isDarkTheme.value ?
                   Colors.white.withOpacity(0.05) :
@@ -94,7 +94,7 @@ class OrderPage extends StatelessWidget {
                           flex: 3,
                           child: Container(
                               margin: EdgeInsets.symmetric(
-                                vertical: MediaQuery.of(context).size.height * 0.02
+                                vertical: 10, //MediaQuery.of(context).size.height * 0.02
                               ),
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
@@ -106,7 +106,7 @@ class OrderPage extends StatelessWidget {
                                     style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 18),
                                   ),
                                   Text("\$4500",
-                                    style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 18),
+                                    style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 16),
                                   ),
                                   SizedBox(height: 5,),
                                   Row(
@@ -121,7 +121,7 @@ class OrderPage extends StatelessWidget {
                                       ),
                                       SizedBox(width: 10,),
                                       Text(App_Localization.of(context).translate("pending"),
-                                        style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 20),
+                                        style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 16),
                                       ),
                                     ],
                                   )

@@ -1,4 +1,6 @@
 import 'package:alwan/controller/intro_controller.dart';
+import 'package:alwan/helper/api.dart';
+import 'package:alwan/model/product_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -9,6 +11,7 @@ class HomeController extends GetxController{
   RxInt categoryIndex = 0.obs;
   ItemScrollController itemScrollController = ItemScrollController();
   RxInt productIndex = (-1).obs;
+  RxList <ProductList> searchList = <ProductList>[].obs;
 
 
 
@@ -20,6 +23,14 @@ class HomeController extends GetxController{
       duration: const Duration(milliseconds: 1000)
     );
   }
+
+  Future getResult(query) async {
+   Api.getSearchResult(query).then((value){
+     searchList.addAll(value);
+   });
+  }
+
+
 
 
 
