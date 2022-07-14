@@ -78,7 +78,7 @@ class _SignInState extends State<SignIn> {
         scrollDirection: Axis.horizontal,
         controller: scrollController,
         child: Container(
-            child: Text('WELCOME',style: TextStyle(fontSize: 170,fontWeight: FontWeight.bold,color: Colors.white.withOpacity(0.05)),)
+            child: Text('WELCOME',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white.withOpacity(0.05)),)
         ),
       ),
     );
@@ -90,7 +90,7 @@ class _SignInState extends State<SignIn> {
       children: [
         Container(
           width: MediaQuery.of(context).size.width * 0.9,
-          height: 70,
+          height: 60,
           color: Colors.transparent,
           child: TextField(
             style: const TextStyle(color: Colors.white),
@@ -110,7 +110,7 @@ class _SignInState extends State<SignIn> {
         const SizedBox(height: 20),
         Container(
           width: MediaQuery.of(context).size.width * 0.9,
-          height: 70,
+          height: 60,
           color: Colors.transparent,
           child: TextField(
             style: const TextStyle(color: Colors.white),
@@ -149,14 +149,14 @@ class _SignInState extends State<SignIn> {
               PageRouteBuilder(
                 pageBuilder: (c, a1, a2) => ForgetPassword(),
                 transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-                transitionDuration: Duration(milliseconds: 500),
+                transitionDuration: const Duration(milliseconds: 500),
               ),
             );
           },
           child: Container(
             height: 25,
             color: Colors.transparent,
-            child: Text(App_Localization.of(context).translate("forget_password"),style: TextStyle(fontSize: 16,color: Colors.white),),
+            child: Text(App_Localization.of(context).translate("forget_password"),style: const TextStyle(fontSize: 14,color: Colors.white),),
           ),
         ),
         const SizedBox(height: 30),
@@ -166,14 +166,14 @@ class _SignInState extends State<SignIn> {
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
-            height: 60,
+            height: 55,
             decoration: BoxDecoration(
               color: App.pink,
               borderRadius: BorderRadius.circular(10)
             ),
             child:  Center(
               child: Text(App_Localization.of(context).translate("sign_in").toUpperCase(),
-                  style: TextStyle(color: Colors.white,fontSize: 18)),
+                  style: TextStyle(color: Colors.white,fontSize: 16)),
             ),
           ),
         ),
@@ -184,14 +184,14 @@ class _SignInState extends State<SignIn> {
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
-            height: 60,
+            height: 55,
             decoration: BoxDecoration(
                 color: App.darkGrey,
                 borderRadius: BorderRadius.circular(10)
             ),
             child:  Center(
               child: Text(App_Localization.of(context).translate("login_us_guest").toUpperCase(),
-                  style: TextStyle(color: Colors.white,fontSize: 18)),
+                  style: const TextStyle(color: Colors.white,fontSize: 16)),
             ),
           ),
         ),
@@ -211,7 +211,6 @@ class _SignInState extends State<SignIn> {
         const SizedBox(width: 5),
         GestureDetector(
           onTap: (){
-            // print('eeeee');
             signInController.signUpOption.value = true;
           },
           child: Container(

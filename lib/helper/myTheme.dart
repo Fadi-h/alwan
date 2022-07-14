@@ -25,7 +25,7 @@ class MyTheme with ChangeNotifier {
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         textTheme: const TextTheme(
-          headline1: TextStyle(color: Colors.black,fontSize: 20),
+          headline1: TextStyle(color: Colors.black,fontSize: 18),
           headline2: TextStyle(color: Colors.black,fontSize: 16,fontFamily: "Poppins",fontWeight: FontWeight.bold),
           headline3: TextStyle(color: Colors.black,fontSize: 14,fontFamily: "Poppins",fontWeight: FontWeight.bold),
           headline4: TextStyle(color: Colors.black,fontSize: 12,fontFamily: "Poppins"),
@@ -47,7 +47,7 @@ class MyTheme with ChangeNotifier {
         backgroundColor: const Color(0XFF181818),
         scaffoldBackgroundColor: const Color(0XFF181818),
         textTheme: const TextTheme(
-          headline1: TextStyle(color: Colors.white,fontSize: 20),
+          headline1: TextStyle(color: Colors.white,fontSize: 18),
           headline2: TextStyle(color: Colors.white,fontSize: 16,fontFamily: "Poppins",fontWeight: FontWeight.bold),
           headline3: TextStyle(color: Colors.white,fontSize: 14,fontFamily: "Poppins",fontWeight: FontWeight.bold),
           headline4: TextStyle(color: Colors.white,fontSize: 12,fontFamily: "Poppins"),
