@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class ProductListController extends GetxController{
 
  RxList<ProductList> productsList = <ProductList>[].obs;
+ RxList<ProductList> tempProductsList = <ProductList>[].obs;
  HomeController homeController = Get.find();
  RxInt productId = (-1).obs;
  
@@ -27,6 +28,26 @@ class ProductListController extends GetxController{
        print('empty');
       }
    });
+  }
+
+  search(String query){
+    List<ProductList> dummySearchList = <ProductList>[];
+    dummySearchList.addAll(productsList);
+    if(query.isNotEmpty) {
+      List<ProductList> dummyListData = <ProductList>[];
+      for (var product in dummySearchList) {
+        if(product.title.toLowerCase().contains(query)) {
+          dummyListData.add(product);
+        }
+      }
+      tempProductsList.clear();
+      tempProductsList.addAll(dummyListData);
+      return;
+    } else {
+      tempProductsList.clear();
+      tempProductsList.addAll(productsList);
+
+    }
   }
   
 

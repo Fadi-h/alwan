@@ -32,6 +32,8 @@
   "light_mode": "الوضع النهاري",
   "language": "اللغة",
   "price" : "السعر",
-  "all_products" : "كل المنتجات"
+  "all_products" : "كل المنتجات",
+  "search_result" : "نتائج البحث"
+
 
 }

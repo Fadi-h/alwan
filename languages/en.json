@@ -32,5 +32,6 @@
   "light_mode": "Light Mode",
   "language": "Language",
   "price" : "price",
-  "all_products" : "All products"
+  "all_products" : "All products",
+  "search_result" : "Search result"
 }

@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class Api {
 
-  static var url = "http://phpstack-548447-2725613.cloudwaysapps.com/";
+  static var url = "https://phpstack-548447-2725613.cloudwaysapps.com/";
 
 
   static Future checkInternet() async {

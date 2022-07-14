@@ -89,14 +89,9 @@ class AllSubCategory extends StatelessWidget {
                     Get.back();
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.13,
-                    height: MediaQuery.of(context).size.width * 0.13,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/icons/logo2.png')
-                        )
-                    ),
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    child: Lottie.asset('assets/icons/Arrow.json'),
                   ),
                 ),
                 Container(
@@ -128,16 +123,6 @@ class AllSubCategory extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Container(
-                //   color: Colors.transparent,
-                //   width: MediaQuery.of(context).size.width * 0.07,
-                //   height: MediaQuery.of(context).size.width * 0.07,
-                //   child: SvgPicture.asset(
-                //       'assets/icons/filter_icon.svg',
-                //     color: Theme.of(context).disabledColor,
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
               ],
             ),
           ),

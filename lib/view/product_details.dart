@@ -22,9 +22,6 @@ class ProductDetails extends StatelessWidget {
     productDetailsController.getData(product.id);
   }
 
-  ProductListController productListController = Get.find();
-
-
   @override
   Widget build(BuildContext context) {
     return Obx((){
