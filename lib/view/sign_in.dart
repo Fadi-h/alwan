@@ -26,8 +26,8 @@ class _SignInState extends State<SignIn> {
     Future.delayed(const Duration(milliseconds: 0)).then((value){
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 5500),
-        curve: Curves.elasticIn,
+        duration: const Duration(milliseconds: 6000),
+        curve: Curves.fastOutSlowIn,
       );
     });
   }

@@ -33,8 +33,8 @@ class IntroController extends GetxController{
       print(customerServiceList.length);
       print(searchSuggestionList.length);
       print(bannerList.length);
-      Future.delayed(const Duration(milliseconds: 0 )).then((value){
-        Get.to(()=>SignIn());
+      Future.delayed(const Duration(milliseconds: 2000 )).then((value){
+        Get.offAll(()=>SignIn());
       });
     });
     //Get.to(()=>SignIn());

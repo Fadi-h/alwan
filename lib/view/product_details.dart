@@ -81,7 +81,7 @@ class ProductDetails extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top,left: 15,right: 15),
             height: MediaQuery.of(context).size.height * 0.1,
-            child: const Icon(Icons.arrow_back_ios_outlined,color: Colors.black,size: 30,),
+            child: const Icon(Icons.arrow_back_ios_outlined,color: Colors.white ,size: 30,),
           ),
         ),
       ],

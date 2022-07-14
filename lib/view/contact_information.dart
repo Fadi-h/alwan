@@ -22,7 +22,7 @@ class ContactInformation extends StatelessWidget {
       onWillPop: () async {
         signInController.showPhoneList.value = false;
         signInController.showWhatsAppList.value = false;
-        return false;
+        return true;
       },
       child: Scaffold(
         body: Stack(

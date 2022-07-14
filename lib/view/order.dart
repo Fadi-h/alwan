@@ -48,6 +48,7 @@ class OrderPage extends StatelessWidget {
       ),
     );
   }
+
   _orderList(context){
     return Container(
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
@@ -61,8 +62,8 @@ class OrderPage extends StatelessWidget {
               const SizedBox(height: 30),
               Container(
                 width: MediaQuery.of(context).size.width * 0.95,
-                child: Text("Sept 23, 2022",
-                  style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 20),
+                child: Text("Sep 23, 2022",
+                  style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 18),
                 ),
               ),
               const SizedBox(height: 10),
@@ -102,10 +103,10 @@ class OrderPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text("123435345353",
-                                    style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 20),
+                                    style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 18),
                                   ),
                                   Text("\$4500",
-                                    style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 20),
+                                    style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,fontSize: 18),
                                   ),
                                   SizedBox(height: 5,),
                                   Row(

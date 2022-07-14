@@ -91,7 +91,7 @@ class ProductList extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
+                  width: MediaQuery.of(context).size.width * 0.74,
                   decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(25)
@@ -119,16 +119,16 @@ class ProductList extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.transparent,
-                  width: MediaQuery.of(context).size.width * 0.07,
-                  height: MediaQuery.of(context).size.width * 0.07,
-                  child: SvgPicture.asset(
-                    'assets/icons/filter_icon.svg',
-                    color: Theme.of(context).disabledColor,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // Container(
+                //   color: Colors.transparent,
+                //   width: MediaQuery.of(context).size.width * 0.07,
+                //   height: MediaQuery.of(context).size.width * 0.07,
+                //   child: SvgPicture.asset(
+                //     'assets/icons/filter_icon.svg',
+                //     color: Theme.of(context).disabledColor,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -17,10 +17,10 @@ class _IntroState extends State<Intro> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 1000)).then((value){
+    Future.delayed(const Duration(milliseconds: 0)).then((value){
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 4000),
+        duration: const Duration(milliseconds: 2500),
         curve: Curves.fastOutSlowIn,
       );
     });
