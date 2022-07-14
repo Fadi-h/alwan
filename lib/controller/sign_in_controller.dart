@@ -26,7 +26,7 @@ class SignInController extends GetxController{
         }else{
           showTopSnackBar(
             context,
-            CustomSnackBar.error(message: "whatsapp no installed"),
+            const CustomSnackBar.error(message: "whatsapp no installed"),
           );
         }
       }else{
@@ -36,7 +36,7 @@ class SignInController extends GetxController{
         }else{
           showTopSnackBar(
             context,
-            CustomSnackBar.error(message: "whatsapp no installed"),
+            const CustomSnackBar.error(message: "whatsapp no installed"),
           );
         }
       }

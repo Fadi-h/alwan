@@ -43,20 +43,20 @@ class _IntroState extends State<Intro> {
                 child: Image.asset('assets/image/intro_background.png'),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: SvgPicture.asset('assets/image/gredient.svg',fit: BoxFit.cover)
-            ),
-            Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: MediaQuery.of(context).size.height * 0.4,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/icons/logo.png')
-                  )
-                ),
-            ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   height: MediaQuery.of(context).size.height,
+            //   child: SvgPicture.asset('assets/image/gredient.svg',fit: BoxFit.cover)
+            // ),
+            // Container(
+            //     width: MediaQuery.of(context).size.width * 0.4,
+            //     height: MediaQuery.of(context).size.height * 0.4,
+            //     decoration: const BoxDecoration(
+            //       image: DecorationImage(
+            //         image: AssetImage('assets/icons/logo.png')
+            //       )
+            //     ),
+            // ),
           ],
         ),
       ),
