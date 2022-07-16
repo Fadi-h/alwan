@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class IntroController extends GetxController{
 
   RxList<Category> categoriesList = <Category>[].obs;
+  RxList<SubCategories> tempCategoriesList = <SubCategories>[].obs;
   RxList<CustomerService> customerServiceList = <CustomerService>[].obs;
   RxList<MyBanner> bannerList = <MyBanner>[].obs;
   RxList<SuggestionSearch> searchSuggestionList = <SuggestionSearch>[].obs;
@@ -38,6 +39,30 @@ class IntroController extends GetxController{
       });
     });
     //Get.to(()=>SignIn());
+  }
+
+  search(String query,index){
+    List<SubCategories> dummySearchList = <SubCategories>[];
+    dummySearchList.addAll(categoriesList[index].subCategories);
+    if(query.isNotEmpty) {
+      List<SubCategories> dummyListData = <SubCategories>[];
+      for (var product in dummySearchList) {
+        if(product.title.toLowerCase().contains(query)) {
+          dummyListData.add(product);
+        }
+      }
+      tempCategoriesList.clear();
+      tempCategoriesList.addAll(dummyListData);
+      print('----------------');
+      print(tempCategoriesList.length);
+      return;
+    } else {
+      tempCategoriesList.clear();
+      tempCategoriesList.addAll(categoriesList[index].subCategories);
+      print('----------------+');
+      print(tempCategoriesList.length);
+
+    }
   }
 
 

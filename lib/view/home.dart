@@ -1,13 +1,15 @@
 import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/home_controller.dart';
 import 'package:alwan/controller/intro_controller.dart';
+import 'package:alwan/controller/settings_controller.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/helper/global.dart';
 import 'package:alwan/helper/myTheme.dart';
-import 'package:alwan/model/start_up.dart';
 import 'package:alwan/view/all_subCategory.dart';
 import 'package:alwan/view/products_list.dart';
-import 'package:alwan/view/searchPage.dart';
 import 'package:alwan/view/search_text_field.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -23,7 +25,6 @@ class Home extends StatelessWidget {
   IntroController introController = Get.find();
   HomeController homeController = Get.put(HomeController());
   final dataKey = GlobalKey();
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class Home extends StatelessWidget {
                           image: AssetImage('assets/image/background.png')
                       )
                   )
-              ) : Text(''),
+              ) : const Text(''),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: SingleChildScrollView(
@@ -67,20 +68,20 @@ class Home extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap:(){
-
+          homeController.logoMove.value ?
+          SizedBox(
+              height: MediaQuery.of(context).size.width * 0.17,
+              child: Lottie.asset('assets/icons/ICONS.json',fit: BoxFit.cover)
+          )
+          : GestureDetector(
+            onTap: (){
+              homeController.move();
             },
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.17,
               height: MediaQuery.of(context).size.width * 0.17,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                      image: AssetImage('assets/icons/logo2.png')
-                  )
+              child: Image.asset('assets/icons/Logo-Header.png',fit: BoxFit.cover,)
               ),
-            ),
           ),
           const SizedBox(height: 10),
           GestureDetector(
@@ -115,28 +116,6 @@ class Home extends StatelessWidget {
                   ),
                 ],
               ),
-              // child: TextField(
-              //   style: TextStyle(
-              //     color: MyTheme.isDarkTheme.value ?
-              //     Colors.white.withOpacity(0.2) :
-              //     Colors.grey,
-              //     fontSize: 16
-              //   ),
-              //   decoration: InputDecoration(
-              //     prefixIcon: Icon(Icons.search,
-              //       color: MyTheme.isDarkTheme.value ?
-              //         Colors.white:
-              //         App.darkGrey),
-              //     border: InputBorder.none,
-              //     focusedBorder: InputBorder.none,
-              //     hintText: App_Localization.of(context).translate("search"),
-              //     hintStyle: TextStyle(fontSize: 16,
-              //         color: MyTheme.isDarkTheme.value ?
-              //         Colors.white.withOpacity(0.2) :
-              //         Colors.grey,
-              //     )
-              //   ),
-              // ),
             ),
           ),
         ],
@@ -154,29 +133,83 @@ class Home extends StatelessWidget {
     );
   }
   _slider(context){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width * 0.45,
-      color: App.grey,
-      child:ImageSlideshow(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height*0.2,
-        initialPage: 0,
-        indicatorColor: Theme.of(context).primaryColor,
-        indicatorBackgroundColor: App.grey,
-        children:
-        introController.bannerList.map((e) => Container(
-          decoration: BoxDecoration(
-              //borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: NetworkImage(e.image),
-                  fit: BoxFit.cover
-              )
+    return Stack(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width * 0.45,
+          color: App.grey,
+          child: CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              viewportFraction: 1,
+              autoPlayAnimationDuration: Duration(milliseconds: 1000),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              onPageChanged: (index, _){
+                homeController.sliderIndex.value = index;
+              }
+            ),
+            items: introController.bannerList.map((e) => Container(
+              width:MediaQuery.of(context).size.width,
+              child: CachedNetworkImage(
+                imageUrl: e.image,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            )).toList(),
+          )
+          // ImageSlideshow(
+          //   width: double.infinity,
+          //   height: MediaQuery.of(context).size.height*0.2,
+          //   initialPage: 0,
+          //   indicatorColor: Theme.of(context).primaryColor,
+          //   indicatorBackgroundColor: App.grey,
+          //   children:
+          //   introController.bannerList.map((e) => Container(
+          //     decoration: BoxDecoration(
+          //         //borderRadius: BorderRadius.circular(10),
+          //         image: DecorationImage(
+          //             image: NetworkImage(e.image),
+          //             fit: BoxFit.cover
+          //         )
+          //     ),
+          //   )).toList(),
+          //   autoPlayInterval: 5000,
+          //   isLoop: true,
+          // ),
+        ),
+        Positioned(
+          bottom: 10,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: introController.bannerList.map((e) {
+                return  Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: homeController.sliderIndex.value == introController.bannerList.indexOf(e)
+                          ? App.pink
+                          : Colors.grey,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           ),
-        )).toList(),
-        autoPlayInterval: 5000,
-        isLoop: true,
-      ),
+        ),
+      ],
     );
   }
   _categoryBar(context){
@@ -204,9 +237,14 @@ class Home extends StatelessWidget {
                    Obx((){
                      return  GestureDetector(
                        onTap: () async {
-                         homeController.categoryIndex.value = index;
-                         if(MediaQuery.of(context).size.shortestSide < 600){
-                           await homeController.scrollToItem(index,introController.categoriesList.length);
+                         // if(settingsController)
+                         if(Global.langCode == 'en'){
+                           homeController.categoryIndex.value = index;
+                           if(MediaQuery.of(context).size.shortestSide < 600){
+                             await homeController.scrollToItem(index,introController.categoriesList.length);
+                           }
+                         }else{
+                           homeController.categoryIndex.value = index;
                          }
                        },
                        child: Container(
@@ -236,8 +274,11 @@ class Home extends StatelessWidget {
       ),
     );
   }
-  _gridBody(context,categoryIndex){
-    int listLength = introController.categoriesList[categoryIndex].subCategories.length;
+  _gridBody(context, categoryIndex){
+    int listLength = 0;
+    if(introController.categoriesList.isNotEmpty){
+      listLength = introController.categoriesList[categoryIndex].subCategories.length;
+    }
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
       child: GridView.builder(
@@ -251,7 +292,12 @@ class Home extends StatelessWidget {
         ),
         itemCount: listLength < 5 ? listLength : 6,
         itemBuilder: (context, index){
-          return index == 5
+          return listLength == 0
+              ? Container(
+            /// TODO
+                 child: Text('empty'),
+              )
+              : index == 5
               ?
          Bounce(
              child: Container(
@@ -329,116 +375,5 @@ class Home extends StatelessWidget {
       ),
     );
   }
-}
 
-// class SearchTextField extends SearchDelegate<String> {
-//   final List<SuggestionSearch> suggestionList;
-//   String? result;
-//   HomeController homeController;
-//
-//   SearchTextField(
-//       {required this.suggestionList, required this.homeController});
-//
-//   @override
-//   List<Widget> buildActions(BuildContext context) {
-//     return [
-//       query.isEmpty
-//           ? const Visibility(
-//             child: Text(''),
-//             visible: false,
-//           )
-//           : IconButton(
-//         icon: const Icon(Icons.search, color: Colors.white,),
-//         onPressed: () {
-//           //close(context, query);
-//           Get.to(()=>SearchPage(query));
-//         },
-//       )
-//     ];
-//   }
-//
-//   @override
-//   Widget buildLeading(BuildContext context) {
-//     return IconButton(
-//       icon: const Icon(Icons.arrow_back),
-//       onPressed: () {
-//         Get.back();
-//       },
-//     );
-//   }
-//
-//
-//   @override
-//   ThemeData appBarTheme(BuildContext context) {
-//     return super.appBarTheme(context).copyWith(
-//       appBarTheme: AppBarTheme(
-//         color: App.pink,
-//         elevation: 0,
-//       ),
-//       hintColor: Colors.white,
-//       textTheme: const TextTheme(
-//         headline6: TextStyle(
-//             color: Colors.white
-//         ),
-//       ),
-//     );
-//   }
-//
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     final suggestions = suggestionList.where((name) {
-//       return name.title.toLowerCase().contains(query.toLowerCase());
-//     });
-//    homeController.getResult(query);
-//     close(context, query);
-//     return Center(
-//       child: CircularProgressIndicator(
-//         color: App.pink,
-//       ),
-//     );
-//   }
-//
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     final suggestions = suggestionList.where((name) {
-//       return name.title.toLowerCase().contains(query.toLowerCase());
-//     });
-//     return Stack(
-//       children: [
-//         Container(
-//             width: MediaQuery.of(context).size.width,
-//             height: MediaQuery.of(context).size.height,
-//             decoration: const BoxDecoration(
-//                 image: DecorationImage(
-//                     fit: BoxFit.cover,
-//                     image: AssetImage('assets/image/background.png')
-//                 )
-//             )
-//         ),
-//         Container(
-//           width: MediaQuery.of(context).size.width,
-//           height: MediaQuery.of(context).size.height,
-//           color: MyTheme.isDarkTheme.value ? Colors.transparent : Colors.white, //App.pink,
-//           child: ListView.builder(
-//             itemCount: suggestions.length,
-//             itemBuilder: (BuildContext context, int index) {
-//               return ListTile(
-//                 title: Text(
-//                   suggestions.elementAt(index).title,
-//                   style: TextStyle(
-//                     color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,
-//                     fontSize: 16
-//                   ),
-//                 ),
-//                 onTap: () {
-//                   query = suggestions.elementAt(index).title;
-//                  // close(context, query);
-//                 },
-//               );
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+}

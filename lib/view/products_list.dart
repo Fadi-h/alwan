@@ -143,7 +143,11 @@ class ProductList extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 15),
-      child: GridView.builder(
+      child: listLength == 0
+          ? Center(
+            child: Text(App_Localization.of(context).translate('empty_list')),
+      )
+      : GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

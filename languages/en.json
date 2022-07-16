@@ -33,5 +33,6 @@
   "language": "Language",
   "price" : "price",
   "all_products" : "All products",
-  "search_result" : "Search result"
+  "search_result" : "Search result",
+  "empty_list" : "There are no products at the moment"
 }

@@ -33,7 +33,8 @@
   "language": "اللغة",
   "price" : "السعر",
   "all_products" : "كل المنتجات",
-  "search_result" : "نتائج البحث"
+  "search_result" : "نتائج البحث",
+  "empty_list" : "لا يوجة منتجات حالياً"
 
 
 }

@@ -36,6 +36,8 @@ class Api {
 
     if (response.statusCode == 200) {
       String data = await response.stream.bytesToString();
+     // return StartUp(categories: [], customerService: [], banners: [],suggestionSearch: []);
+
       return StartUp.fromMap(jsonDecode(data));
     }
     else {

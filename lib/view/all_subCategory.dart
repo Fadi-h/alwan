@@ -18,6 +18,8 @@ class AllSubCategory extends StatelessWidget {
   AllSubCategoryController allSubCategoryController = Get.put(AllSubCategoryController());
   AllSubCategory(this.categoryIndex){
     allSubCategoryController.categoryIndex.value = categoryIndex;
+    introController.tempCategoriesList.clear();
+    introController.tempCategoriesList.addAll(introController.categoriesList[categoryIndex].subCategories);
   }
 
   @override
@@ -86,9 +88,10 @@ class AllSubCategory extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
+                    homeController.categoryIndex.value = allSubCategoryController.categoryIndex.value;
                     Get.back();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.15,
                     height: MediaQuery.of(context).size.width * 0.15,
                     child: Lottie.asset('assets/icons/Arrow.json'),
@@ -101,6 +104,10 @@ class AllSubCategory extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25)
                   ),
                   child: TextField(
+                    controller: allSubCategoryController.searchController,
+                    onChanged: (query){
+                      introController.search(query, allSubCategoryController.categoryIndex.value);
+                    },
                     style: TextStyle(
                         color: MyTheme.isDarkTheme.value ?
                         Colors.white.withOpacity(0.2) :
@@ -131,6 +138,7 @@ class AllSubCategory extends StatelessWidget {
       ),
     );
   }
+
   _categoryBar(context){
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
@@ -157,6 +165,9 @@ class AllSubCategory extends StatelessWidget {
                           if(MediaQuery.of(context).size.shortestSide < 600){
                             await allSubCategoryController.scrollToItem(index,introController.categoriesList.length);
                           }
+                          allSubCategoryController.searchController.clear();
+                          introController.tempCategoriesList.clear();
+                          introController.tempCategoriesList.addAll(introController.categoriesList[index].subCategories);
                         },
                         child: Container(
                             color: Colors.transparent,
@@ -186,7 +197,7 @@ class AllSubCategory extends StatelessWidget {
     );
   }
   _gridBody(context,categoryIndex){
-    int listLength = introController.categoriesList[categoryIndex].subCategories.length;
+    int listLength = introController.tempCategoriesList.length; //[categoryIndex].subCategories.length;
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -210,7 +221,7 @@ class AllSubCategory extends StatelessWidget {
     return GestureDetector(
       onTap: (){
        // Get.to(()=>ProductDetails(introController.categoriesList[categoryIndex].subCategories[index]));
-        homeController.productIndex.value = introController.categoriesList[categoryIndex].subCategories[index].id;
+        homeController.productIndex.value = introController.tempCategoriesList[index].id; //.subCategories[index].id;
         Get.to(()=>ProductList());
       },
       child: SizedBox(
@@ -226,9 +237,9 @@ class AllSubCategory extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   child: Hero(
                     transitionOnUserGestures: true,
-                    tag: introController.categoriesList[categoryIndex].subCategories[index],
+                    tag: introController.tempCategoriesList[index],//.subCategories[index],
                     child: Image.network(
-                        introController.categoriesList[categoryIndex].subCategories[index].image,
+                        introController.tempCategoriesList[index].image ,//introController.categoriesList[categoryIndex].subCategories[index].image,
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
@@ -248,7 +259,8 @@ class AllSubCategory extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                  introController.categoriesList[categoryIndex].subCategories[index].title,
+                  introController.tempCategoriesList[index].title,
+                  //introController.categoriesList[categoryIndex].subCategories[index].title,
                   maxLines: 2,
                   style: TextStyle(
                       color: MyTheme.isDarkTheme.value ? Colors.white : Colors.black,

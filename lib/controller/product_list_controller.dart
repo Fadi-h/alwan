@@ -1,5 +1,3 @@
-
-
 import 'package:alwan/controller/home_controller.dart';
 import 'package:alwan/helper/api.dart';
 import 'package:alwan/model/product_list.dart';
@@ -22,10 +20,11 @@ class ProductListController extends GetxController{
   getData() async {
     await Api.getProductList(homeController.productIndex.value).then((value){
      if(value.isNotEmpty){
-       print('Not empty');
+        print('Not empty');
         productsList.addAll(value);
+        tempProductsList.addAll(value);
      }else{
-       print('empty');
+        print('empty');
       }
    });
   }

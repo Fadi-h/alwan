@@ -140,7 +140,7 @@ class Settings extends StatelessWidget {
               ],
             ),
             child: Center(
-              child: Container(
+              child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,10 +148,10 @@ class Settings extends StatelessWidget {
                       Text(App_Localization.of(context).translate("language"),
                         maxLines: 1,
                         style: Theme.of(context).textTheme.headline2,),
-                      Container(
+                      SizedBox(
                         //width: MediaQuery.of(context).size.width * 0.35,
                         child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: settingsController.languages.length,
@@ -195,8 +195,8 @@ class Settings extends StatelessWidget {
                                       Center(
                                         child: Text(
                                           settingsController.languages[index]["id"] == "en" ?
-                                          "en" : "ar",
-                                          style: Theme.of(context).textTheme.bodyText1,
+                                          "English" : "العربية",
+                                          style: Theme.of(context).textTheme.bodyText2,
                                         ),
                                       ),
                                     ],

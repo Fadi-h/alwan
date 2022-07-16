@@ -12,6 +12,8 @@ class HomeController extends GetxController{
   ItemScrollController itemScrollController = ItemScrollController();
   RxInt productIndex = (-1).obs;
   RxList <ProductList> searchList = <ProductList>[].obs;
+  RxBool logoMove = false.obs;
+  RxInt sliderIndex = 0.obs;
 
 
 
@@ -27,6 +29,13 @@ class HomeController extends GetxController{
   Future getResult(query) async {
    Api.getSearchResult(query).then((value){
      searchList.addAll(value);
+   });
+  }
+
+  move(){
+   logoMove.value = true;
+   Future.delayed(const Duration(milliseconds: 2300)).then((value){
+     logoMove.value = false;
    });
   }
 
