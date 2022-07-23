@@ -9,6 +9,7 @@ import 'package:alwan/view/profile.dart';
 import 'package:alwan/view/settings.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +19,16 @@ class MainClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Obx((){
       return Scaffold(
+        appBar: AppBar(
+            elevation: 0,
+            toolbarHeight: 0,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: Color(0XFF300A2A),//App.pink,//MyTheme.isDarkTheme.value ? App.black : Colors.white,
+            ),
+        ),
         bottomNavigationBar: BottomNavyBar(
           backgroundColor: MyTheme.isDarkTheme.value ? App.darkGrey : Colors.white,
           selectedIndex: mainClassController.selectedIndex.value,

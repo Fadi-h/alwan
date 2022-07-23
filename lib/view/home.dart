@@ -11,9 +11,9 @@ import 'package:alwan/view/search_text_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:lottie/lottie.dart';
@@ -48,6 +48,7 @@ class Home extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SizedBox(height: 10),
                       _header(context),
                       const SizedBox(height: 20),
                       _body(context)
@@ -90,12 +91,13 @@ class Home extends StatelessWidget {
                   context: context,
                   delegate: SearchTextField(
                       suggestionList: introController.searchSuggestionList,
-                      homeController: homeController) );
+                      homeController: homeController)
+              );
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               width: MediaQuery.of(context).size.width,
-              height: 50,
+              height: 45,//MediaQuery.of(context).size.height * 0.06,
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(25)

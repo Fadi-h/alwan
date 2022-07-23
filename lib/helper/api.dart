@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:alwan/model/product.dart';
 import 'package:alwan/model/product_list.dart';
 import 'package:alwan/model/start_up.dart';
-import 'package:alwan/model/product_list.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +10,6 @@ import 'package:http/http.dart' as http;
 class Api {
 
   static var url = "https://phpstack-548447-2725613.cloudwaysapps.com/";
-
 
   static Future checkInternet() async {
     var result = await Connectivity().checkConnectivity();
