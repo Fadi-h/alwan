@@ -34,5 +34,12 @@
   "price" : "price",
   "all_products" : "All products",
   "search_result" : "Search result",
-  "empty_list" : "There are no products at the moment"
+  "empty_list" : "There are no products at the moment",
+  "address1" : "Address 1",
+  "address2" : "Address 2",
+  "apartment" : "Apartment",
+  "phone" : "Phone",
+  "emirate" : "Emirate",
+  "cancel" : "Cancel",
+  "save_address" : "Save address"
 }

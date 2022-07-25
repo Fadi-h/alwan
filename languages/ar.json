@@ -34,7 +34,13 @@
   "price" : "السعر",
   "all_products" : "كل المنتجات",
   "search_result" : "نتائج البحث",
-  "empty_list" : "لا يوجة منتجات حالياً"
-
+  "empty_list" : "لا يوجة منتجات حالياً",
+  "address1" : "العنوان الأول",
+  "address2" : "العنوان الثاني",
+  "apartment" : "الشقة",
+  "phone" : "الهاتف",
+  "emirate" : "الامارة",
+  "cancel" : "إلغاء",
+  "save_address" : "حفظ العنوان"
 
 }

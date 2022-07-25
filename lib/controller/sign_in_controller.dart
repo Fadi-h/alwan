@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/api.dart';
+import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/main_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -81,7 +82,13 @@ class SignInController extends GetxController{
           }else{
             /// todo
             // fetch data
-            mySnackBar('Successfully login', 'Welcome to alwan app');
+            Get.snackbar(
+                'Successfully login',
+              'Welcome to alwan app',
+                margin: EdgeInsets.only(top: 30,left: 25,right: 25),
+              backgroundColor: MyTheme.isDarkTheme.value ? Colors.grey.withOpacity(0.5) : Colors.black.withOpacity(0.5),
+              colorText: Colors.white
+            );
             loading.value = false;
             Get.to(()=>MainClass());
           }
@@ -100,8 +107,8 @@ class SignInController extends GetxController{
     return Get.snackbar(
         title,
         description,
-        margin: EdgeInsets.only(top: 20),
-        colorText: Colors.white
+        margin: EdgeInsets.only(top: 30,left: 25,right: 25),
+        colorText: Colors.white,
     );
   }
 
