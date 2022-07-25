@@ -1,11 +1,13 @@
 import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/sign_in_controller.dart';
+import 'package:alwan/helper/api.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/view/contact_information.dart';
 import 'package:alwan/view/forget_password.dart';
 import 'package:alwan/view/main_class.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +38,13 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Obx((){
       return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          toolbarHeight: 0,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Color(0XFF300A2A),
+          ),
+        ),
         body: Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -101,6 +110,7 @@ class _SignInState extends State<SignIn> {
           height: 60,
           color: Colors.transparent,
           child: TextField(
+            controller: signInController.username,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
@@ -121,6 +131,7 @@ class _SignInState extends State<SignIn> {
           height: 55,
           color: Colors.transparent,
           child: TextField(
+            controller: signInController.password,
             style: const TextStyle(color: Colors.white),
             obscureText: !signInController.showPassword.value,
             decoration: InputDecoration(
@@ -172,7 +183,7 @@ class _SignInState extends State<SignIn> {
         GestureDetector(
           onTap: (){
             FocusManager.instance.primaryFocus?.unfocus();
-            Get.to(()=>MainClass());
+            signInController.login();
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
@@ -182,7 +193,12 @@ class _SignInState extends State<SignIn> {
               borderRadius: BorderRadius.circular(10)
             ),
             child:  Center(
-              child: Text(App_Localization.of(context).translate("sign_in").toUpperCase(),
+              child: signInController.loading.value
+                  ? Center(child: Container(
+                width: 25,
+                  height: 25,
+                  child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.5)))
+                  : Text(App_Localization.of(context).translate("sign_in").toUpperCase(),
                   style: TextStyle(color: Colors.white,fontSize: 16)),
             ),
           ),
@@ -322,13 +338,13 @@ class _SignInState extends State<SignIn> {
                   );
                 },
                 child: Container(
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                       color: App.darkGrey,
                       shape: BoxShape.circle
                   ),
-                  child: Center(child: SvgPicture.asset('assets/icons/whatsapp.svg',width: 35,height: 35,)),
+                  child: Center(child: SvgPicture.asset('assets/icons/whatsapp.svg',width: 30,height: 30,)),
                 ),
               ),
               GestureDetector(
@@ -344,14 +360,14 @@ class _SignInState extends State<SignIn> {
                   );
                 },
                 child: Container(
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                       color: App.darkGrey,
                       shape: BoxShape.circle
                   ),
                   child: Center(
-                    child: Icon(Icons.phone,size: 35,color: Colors.white),
+                    child: Icon(Icons.phone,size: 30,color: Colors.white),
                   ),
                 ),
               ),

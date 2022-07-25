@@ -25,20 +25,28 @@ class IntroController extends GetxController{
 
 
   getData()async{
-    Api.getStartUpData().then((data){
-      categoriesList.value = data.categories;
-      customerServiceList.value = data.customerService;
-      searchSuggestionList.value = data.suggestionSearch;
-      bannerList.value = data.banners;
-      print(categoriesList.length);
-      print(customerServiceList.length);
-      print(searchSuggestionList.length);
-      print(bannerList.length);
-      Future.delayed(const Duration(milliseconds: 2000 )).then((value){
-        Get.offAll(()=>SignIn());
-      });
+    /// todo
+    /// no internet
+    Api.checkInternet().then((value){
+      if(value){
+        print('internet-------------------');
+        Api.getStartUpData().then((data){
+          categoriesList.value = data.categories;
+          customerServiceList.value = data.customerService;
+          searchSuggestionList.value = data.suggestionSearch;
+          bannerList.value = data.banners;
+          print(categoriesList.length);
+          print(customerServiceList.length);
+          print(searchSuggestionList.length);
+          print(bannerList.length);
+          Future.delayed(const Duration(milliseconds: 2000 )).then((value){
+            Get.offAll(()=>SignIn());
+          });
+        });
+      }else{
+        print('No internet +++++++++++++');
+      }
     });
-    //Get.to(()=>SignIn());
   }
 
   search(String query,index){

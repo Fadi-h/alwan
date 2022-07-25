@@ -143,7 +143,13 @@ class ProductList extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 15),
-      child: listLength == 0
+      child: productListController.loading.value
+          ? Center(
+          child: Container(
+              width: 25,
+              height: 25,
+              child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.5)))
+          : listLength == 0
           ? Center(
             child: Text(App_Localization.of(context).translate('empty_list')),
       )

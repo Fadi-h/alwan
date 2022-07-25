@@ -143,17 +143,17 @@ class ContactInformation extends StatelessWidget {
                                   }
                                 },
                                 child: Container(
-                                  width: 60,
-                                  height: 60,
+                                  width: 50,
+                                  height: 50,
                                   decoration: BoxDecoration(
                                       color: MyTheme.isDarkTheme.value ?
                                       Colors.white : Colors.black,
                                       shape: BoxShape.circle
                                   ),
                                   child: signInController.showWhatsAppList.isTrue ?
-                                  Center(child: SvgPicture.asset('assets/icons/whatsapp-green.svg',width: 35,height: 35,))
+                                  Center(child: SvgPicture.asset('assets/icons/whatsapp-green.svg',width: 30,height: 30,))
                                   : Center(
-                                    child: Icon(Icons.phone,size: 35,
+                                    child: Icon(Icons.phone,size: 30,
                                         color: MyTheme.isDarkTheme.value ?
                                         Colors.black : Colors.white,
                                     ),

@@ -9,6 +9,7 @@ class ProductListController extends GetxController{
  RxList<ProductList> tempProductsList = <ProductList>[].obs;
  HomeController homeController = Get.find();
  RxInt productId = (-1).obs;
+ RxBool loading = false.obs;
  
  @override
   void onInit() {
@@ -18,13 +19,16 @@ class ProductListController extends GetxController{
 
   
   getData() async {
+   loading.value = true;
     await Api.getProductList(homeController.productIndex.value).then((value){
      if(value.isNotEmpty){
         print('Not empty');
         productsList.addAll(value);
         tempProductsList.addAll(value);
+        loading.value = false;
      }else{
         print('empty');
+        loading.value = false;
       }
    });
   }

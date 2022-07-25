@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:alwan/model/product.dart';
 import 'package:alwan/model/product_list.dart';
 import 'package:alwan/model/start_up.dart';
+import 'package:alwan/model/user.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,7 +35,6 @@ class Api {
 
     if (response.statusCode == 200) {
       String data = await response.stream.bytesToString();
-     // return StartUp(categories: [], customerService: [], banners: [],suggestionSearch: []);
 
       return StartUp.fromMap(jsonDecode(data));
     }
@@ -105,5 +105,86 @@ class Api {
   }
 
 
+  static Future<User> login(String username, String password) async{
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url + 'api/customer-login'));
+    request.body = json.encode({
+      "username": username,
+      "password": password
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var jsonData = await response.stream.bytesToString();
+      if(jsonData.length < 3){
+        /// alert (username and password is wrong)
+        return User(id: -1, quickBookId: "", name: "", token: "",
+            financialState: "", username: "", password:"", address1: "", address2: "", emirate: "", apartment: "", phone: "") ;
+      }else{
+        jsonData = jsonData.replaceRange(0,1, '');
+        jsonData = jsonData.replaceRange(jsonData.length -1 ,jsonData.length ,'');
+        print(jsonData);
+        User user = User.fromMap(jsonDecode(jsonData));
+        print(user.name);
+        return user;
+      }
+    } else {
+      /// alert (something went wrong)
+      return User(id: -2, quickBookId: "", name: "", token: "",
+          financialState: "", username: "", password:"", address1: "", address2: "", emirate: "", apartment: "", phone: "") ;
+    }
+
+  }
+
+  static Future getCustomerOrder(String userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url + 'api/customer-order'));
+    request.body = json.encode({
+      "id": userId
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
+  static Future setCustomerAddress(String address1, String address2, String emirate, String apartment, String phone, String userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url + 'api/customer-address'));
+    request.body = json.encode({
+      "address1": address1,
+      "address2": address2,
+      "emirate": emirate,
+      "apartment" : apartment,
+      "phone": phone,
+      "id": userId
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
 
 }

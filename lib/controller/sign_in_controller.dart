@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:alwan/controller/intro_controller.dart';
+import 'package:alwan/helper/api.dart';
+import 'package:alwan/view/main_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -13,6 +15,9 @@ class SignInController extends GetxController{
   RxBool showPassword = false.obs;
   RxBool showWhatsAppList = false.obs;
   RxBool showPhoneList = false.obs;
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  RxBool loading = false.obs;
 
   openWhatApp(BuildContext context,String msg,String phone) async{
     try {
@@ -56,6 +61,48 @@ class SignInController extends GetxController{
       launch("tel://$phone");
       // print(introController.customerServiceList[index].phone);
     }
+  }
+
+  login(){
+    if(username.text.isNotEmpty){
+      if(password.text.isNotEmpty){
+        loading.value = true;
+        Api.login(username.text, password.text).then((value){
+          print(username.text);
+          print(password.text);
+          if(value.id == -1){
+            // email or password is wrong
+            mySnackBar('Wrong Email or password', 'Please try again');
+            loading.value = false;
+          }else if (value.id == -2){
+            // something went wrong
+            mySnackBar('Something is wrong', 'Please try again');
+            loading.value = false;
+          }else{
+            /// todo
+            // fetch data
+            mySnackBar('Successfully login', 'Welcome to alwan app');
+            loading.value = false;
+            Get.to(()=>MainClass());
+          }
+        });
+      }else{
+        /// password empty
+        mySnackBar('Password is empty', 'Please enter your password');
+      }
+    }else{
+      /// username empty
+      mySnackBar('Email is empty', 'Please enter your email');
+    }
+  }
+
+  mySnackBar(title, description){
+    return Get.snackbar(
+        title,
+        description,
+        margin: EdgeInsets.only(top: 20),
+        colorText: Colors.white
+    );
   }
 
 }

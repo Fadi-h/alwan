@@ -5,8 +5,6 @@ import 'package:alwan/controller/main_class_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/address.dart';
-import 'package:alwan/view/invoice.dart';
-import 'package:alwan/view/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -168,7 +166,7 @@ class Profile extends StatelessWidget {
                         style: TextStyle(
                           color: MyTheme.isDarkTheme.value ? Colors.white :
                           Colors.black,
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold
                         )
                     )
@@ -179,52 +177,52 @@ class Profile extends StatelessWidget {
               )
             ),
           ),
-          // VerticalDivider(
-          //   color: MyTheme.isDarkTheme.value ? Colors.white :
-          //   Colors.black,
-          //   width: 1,
-          //   thickness: 1,
-          // ),
-          // Expanded(
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       Navigator.push(
-          //         context,
-          //         PageRouteBuilder(
-          //           pageBuilder: (c, a1, a2) => Addresses(),
-          //           transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-          //           transitionDuration: Duration(milliseconds: 500),
-          //         ),
-          //       );
-          //     },
-          //     child: Container(
-          //       color: Colors.transparent,
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.center,
-          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //         children: [
-          //           Container(
-          //             width: 30,
-          //             height: 30,
-          //             child: SvgPicture.asset("assets/icons/address.svg",
-          //                 color: MyTheme.isDarkTheme.value ? Colors.white :
-          //                 Colors.black
-          //             ),
-          //           ),
-          //           Center(child: Text(App_Localization.of(context).translate("my_address"),
-          //               style: TextStyle(
-          //                   color: MyTheme.isDarkTheme.value ? Colors.white :
-          //                   Colors.black,
-          //                   fontSize: 16,
-          //                   fontWeight: FontWeight.bold
-          //               )
-          //           )
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          VerticalDivider(
+            color: MyTheme.isDarkTheme.value ? Colors.white :
+            Colors.black,
+            width: 1,
+            thickness: 1,
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => Addresses(),
+                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                    transitionDuration: Duration(milliseconds: 500),
+                  ),
+                );
+              },
+              child: Container(
+                color: Colors.transparent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      child: SvgPicture.asset("assets/icons/address.svg",
+                          color: MyTheme.isDarkTheme.value ? Colors.white :
+                          Colors.black
+                      ),
+                    ),
+                    Center(child: Text(App_Localization.of(context).translate("my_address"),
+                        style: TextStyle(
+                            color: MyTheme.isDarkTheme.value ? Colors.white :
+                            Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold
+                        )
+                    )
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
           VerticalDivider(
             color: MyTheme.isDarkTheme.value ? Colors.white :
             Colors.black,
