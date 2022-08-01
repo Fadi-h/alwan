@@ -3,6 +3,8 @@ import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/api.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/main_class.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -11,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 
 class SignInController extends GetxController{
+
 
   RxBool signUpOption = false.obs;
   RxBool showPassword = false.obs;
@@ -65,6 +68,8 @@ class SignInController extends GetxController{
   }
 
   login(){
+
+
     if(username.text.isNotEmpty){
       if(password.text.isNotEmpty){
         loading.value = true;

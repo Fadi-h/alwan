@@ -1,13 +1,15 @@
 import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/sign_in_controller.dart';
-import 'package:alwan/helper/api.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/main.dart';
 import 'package:alwan/view/contact_information.dart';
 import 'package:alwan/view/forget_password.dart';
-import 'package:alwan/view/main_class.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -15,16 +17,27 @@ import 'package:get/get.dart';
 class SignIn extends StatefulWidget {
   @override
   State<SignIn> createState() => _SignInState();
+
+
+
 }
 
 class _SignInState extends State<SignIn> {
+
+
+
   SignInController signInController = Get.put(SignInController());
   IntroController introController = Get.find();
   ScrollController scrollController = ScrollController();
 
   @override
-  void initState() {
-     super.initState();
+  void initState()  {
+     super.initState(); //
+
+
+
+
+
     Future.delayed(const Duration(milliseconds: 0)).then((value){
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
@@ -162,16 +175,21 @@ class _SignInState extends State<SignIn> {
         ),
         const SizedBox(height: 10),
         GestureDetector(
-          onTap: (){
-            FocusManager.instance.primaryFocus?.unfocus();
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (c, a1, a2) => ForgetPassword(),
-                transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-                transitionDuration: const Duration(milliseconds: 500),
-              ),
-            );
+          onTap: () async {
+            String? token = await FirebaseMessaging.instance.getToken();
+            print('---------------------');
+            print(token);
+            print('---------------------');
+
+            // FocusManager.instance.primaryFocus?.unfocus();
+            // Navigator.push(
+            //   context,
+            //   PageRouteBuilder(
+            //     pageBuilder: (c, a1, a2) => ForgetPassword(),
+            //     transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+            //     transitionDuration: const Duration(milliseconds: 500),
+            //   ),
+            // );
           },
           child: Container(
             height: 25,

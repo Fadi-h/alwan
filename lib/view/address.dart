@@ -79,35 +79,25 @@ class Addresses extends StatelessWidget {
   _body(context){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.9 - MediaQuery.of(context).viewPadding.top,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            child: Column(
-              children: [
-                _address1(context),
-                const SizedBox(height: 20),
-                _address2(context),
-                const SizedBox(height: 20),
-                _emirate(context),
-                const SizedBox(height: 20),
-                _apartment(context),
-                const SizedBox(height: 20),
-                _phone(context),
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              children: [
-                _saveButton(context),
-                const SizedBox(height: 20),
-                _cancelButton(context),
-                const SizedBox(height: 40),
-              ],
-            ),
-          ),
+          const SizedBox(height: 20),
+          _address1(context),
+          const SizedBox(height: 20),
+          _address2(context),
+          const SizedBox(height: 20),
+          _emirate(context),
+          const SizedBox(height: 20),
+          _apartment(context),
+          const SizedBox(height: 20),
+          _phone(context),
+          const SizedBox(height: 50),
+          _saveButton(context),
+          const SizedBox(height: 20),
+          _cancelButton(context),
+          const SizedBox(height: 50),
+
         ],
       ),
     );
