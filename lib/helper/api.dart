@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:alwan/model/order.dart';
 import 'package:alwan/model/product.dart';
 import 'package:alwan/model/product_list.dart';
 import 'package:alwan/model/start_up.dart';
@@ -140,7 +141,7 @@ class Api {
 
   }
 
-  static Future getCustomerOrder(String userId) async {
+  static Future<List<Order>> getCustomerOrder(String userId) async {
     var headers = {
       'Content-Type': 'application/json'
     };
@@ -153,10 +154,16 @@ class Api {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      String data = await response.stream.bytesToString();
+      var list = jsonDecode(data) as List;
+      List<Order> orders = <Order>[];
+      for(var o in list){
+        orders.add(Order.fromMap(o));
+      }
+      return orders;
     }
     else {
-      print(response.reasonPhrase);
+      return [];
     }
 
   }
@@ -180,9 +187,35 @@ class Api {
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      return true;
     }
     else {
       print(response.reasonPhrase);
+      return false;
+    }
+
+  }
+
+  static Future sendUserToken(token, userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url + 'api/customer/token'));
+    request.body = json.encode({
+      "token": token,
+      "id": userId
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
     }
 
   }

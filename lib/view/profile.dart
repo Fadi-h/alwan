@@ -186,14 +186,15 @@ class Profile extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (c, a1, a2) => Addresses(),
-                    transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-                    transitionDuration: Duration(milliseconds: 500),
-                  ),
-                );
+                Get.to(()=>Addresses());
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (c, a1, a2) => Addresses(),
+                //     transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                //     transitionDuration: Duration(milliseconds: 200),
+                //   ),
+                // );
               },
               child: Container(
                 color: Colors.transparent,

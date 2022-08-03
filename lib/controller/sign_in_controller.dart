@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/helper/api.dart';
+import 'package:alwan/helper/global.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/main_class.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +21,12 @@ class SignInController extends GetxController{
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   RxBool loading = false.obs;
+
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   openWhatApp(BuildContext context,String msg,String phone) async{
     try {
@@ -68,8 +73,6 @@ class SignInController extends GetxController{
   }
 
   login(){
-
-
     if(username.text.isNotEmpty){
       if(password.text.isNotEmpty){
         loading.value = true;
@@ -77,25 +80,37 @@ class SignInController extends GetxController{
           print(username.text);
           print(password.text);
           if(value.id == -1){
-            // email or password is wrong
             mySnackBar('Wrong Email or password', 'Please try again');
             loading.value = false;
           }else if (value.id == -2){
-            // something went wrong
             mySnackBar('Something is wrong', 'Please try again');
             loading.value = false;
           }else{
             /// todo
-            // fetch data
-            Get.snackbar(
-                'Successfully login',
-              'Welcome to alwan app',
-                margin: EdgeInsets.only(top: 30,left: 25,right: 25),
-              backgroundColor: MyTheme.isDarkTheme.value ? Colors.grey.withOpacity(0.5) : Colors.black.withOpacity(0.5),
-              colorText: Colors.white
-            );
-            loading.value = false;
-            Get.to(()=>MainClass());
+            Api.sendUserToken(Global.token, value.id).then((done){
+              if(done){
+                Global.storeUserInformation(
+                    value.id,
+                    value.name,
+                    value.username,
+                    value.address1 ?? "",
+                    value.address2 ?? "",
+                    value.emirate ?? "",
+                    value.apartment ?? "",
+                    value.phone ??"");
+                Get.snackbar(
+                    'Successfully login',
+                    'Welcome to alwan app',
+                    margin: EdgeInsets.only(top: 30,left: 25,right: 25),
+                    backgroundColor: MyTheme.isDarkTheme.value ? Colors.grey.withOpacity(0.5) : Colors.black.withOpacity(0.5),
+                    colorText: Colors.white
+                );
+                loading.value = false;
+                Get.to(()=>MainClass());
+              }else{
+                print('can not send token');
+              }
+            });
           }
         });
       }else{
@@ -116,5 +131,11 @@ class SignInController extends GetxController{
         colorText: Colors.white,
     );
   }
+
+
+
+
+
+
 
 }

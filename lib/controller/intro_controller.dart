@@ -1,8 +1,10 @@
 
 
 import 'package:alwan/helper/api.dart';
+import 'package:alwan/helper/global.dart';
 import 'package:alwan/model/start_up.dart';
 import 'package:alwan/view/sign_in.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 class IntroController extends GetxController{
@@ -16,10 +18,12 @@ class IntroController extends GetxController{
 
 
   @override
-  void onInit(){
+  void onInit() async{
     super.onInit();
    getData();
    //  Api.checkInternet();
+    Global.getUserInformation();
+    await fetchUserToken();
   }
 
 
@@ -69,8 +73,12 @@ class IntroController extends GetxController{
       tempCategoriesList.addAll(categoriesList[index].subCategories);
       print('----------------+');
       print(tempCategoriesList.length);
-
     }
+  }
+
+  fetchUserToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    Global.setUserToken(token ?? "");
   }
 
 

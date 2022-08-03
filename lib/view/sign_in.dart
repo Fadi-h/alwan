@@ -32,12 +32,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   void initState()  {
-     super.initState(); //
-
-
-
-
-
+     super.initState();
     Future.delayed(const Duration(milliseconds: 0)).then((value){
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
@@ -176,10 +171,6 @@ class _SignInState extends State<SignIn> {
         const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
-            String? token = await FirebaseMessaging.instance.getToken();
-            print('---------------------');
-            print(token);
-            print('---------------------');
 
             // FocusManager.instance.primaryFocus?.unfocus();
             // Navigator.push(

@@ -97,7 +97,6 @@ class Addresses extends StatelessWidget {
           const SizedBox(height: 20),
           _cancelButton(context),
           const SizedBox(height: 50),
-
         ],
       ),
     );
@@ -249,6 +248,7 @@ class Addresses extends StatelessWidget {
       onTap: (){
         FocusManager.instance.primaryFocus?.unfocus();
         // signInController.login();
+        addressController.saveAddress();
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -258,8 +258,13 @@ class Addresses extends StatelessWidget {
             borderRadius: BorderRadius.circular(10)
         ),
         child:  Center(
-          child:  Text(App_Localization.of(context).translate("save_address"),
-              style: TextStyle(color: Colors.white,fontSize: 16)),
+          child:  addressController.loading.value
+              ?  Center(child: Container(
+                width: 25,
+                height: 25,
+                child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2.5)))
+              : Text(App_Localization.of(context).translate("save_address"),
+                style: TextStyle(color: Colors.white,fontSize: 16)),
         ),
       ),
     );
@@ -269,7 +274,8 @@ class Addresses extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         FocusManager.instance.primaryFocus?.unfocus();
-
+        addressController.clearTextField();
+        Get.back();
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
