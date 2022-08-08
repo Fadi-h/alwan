@@ -17,6 +17,12 @@ class MainClass extends StatelessWidget {
 
   MainClassController mainClassController = Get.put(MainClassController());
 
+  MainClass(){
+    Future.delayed(Duration(milliseconds: 200)).then((value) {
+      mainClassController.selectedIndex.value=0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -35,8 +41,8 @@ class MainClass extends StatelessWidget {
           showElevation: true, // use this to remove appBar's elevation
           onItemSelected: (index) {
             mainClassController.selectedIndex.value = index;
-            mainClassController.pageController.animateToPage(index, duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
-            // mainClassController.pageController.jumpTo(index*MediaQuery.of(context).size.width);
+            // mainClassController.pageController.animateToPage(index, duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+            mainClassController.pageController.jumpTo(index*MediaQuery.of(context).size.width);
           },
           items: [
             BottomNavyBarItem(
@@ -124,9 +130,9 @@ class MainClass extends StatelessWidget {
             controller: mainClassController.pageController,
             onPageChanged: (index){
             //  print(index);
-             // mainClassController.selectedIndex.value = index;
+             mainClassController.selectedIndex.value = index;
             },
-             physics: NeverScrollableScrollPhysics(),
+             // physics: NeverScrollableScrollPhysics(),
             children: [
               Home(),
               OrderPage(),
@@ -138,4 +144,5 @@ class MainClass extends StatelessWidget {
       );
     });
   }
+
 }

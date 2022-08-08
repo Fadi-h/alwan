@@ -2,6 +2,7 @@ import 'package:alwan/app_localization.dart';
 import 'package:alwan/helper/global.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/helper/store.dart';
+import 'package:alwan/view/address_2.dart';
 import 'package:alwan/view/intro.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -171,6 +172,7 @@ class _MyAppState extends State<MyApp> {
           return supportedLocales.first;
         },
       home: Intro()
+      // home: Addresses_2()
     );
   }
 }

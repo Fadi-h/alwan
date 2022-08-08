@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:alwan/helper/global.dart';
 import 'package:alwan/model/order.dart';
 import 'package:alwan/model/product.dart';
 import 'package:alwan/model/product_list.dart';
@@ -131,6 +132,10 @@ class Api {
         print(jsonData);
         User user = User.fromMap(jsonDecode(jsonData));
         print(user.name);
+        Global.user = user;
+        Global.userId = user.id;
+        Global.password = user.password;
+        Global.username = user.username;
         return user;
       }
     } else {
@@ -218,6 +223,61 @@ class Api {
       return false;
     }
 
+  }
+
+  static Future<bool> requestStatement(String note, int userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url+'api/request-statment'));
+    request.body = json.encode({
+      "customer_id": userId,
+      "notes": note
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
+    }
+
+
+  }
+
+  static Future<bool> requestShipping(String nick_name, String street_name,String building, String floor,
+      String flat, String additional_description,String phone, int order_id) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url+'api/shipping-request2'));
+    request.body = json.encode({
+      "nick_name": nick_name,
+      "street_name": street_name,
+      "building": street_name,
+      "floor": floor,
+      "flat": flat,
+      "additional_description": additional_description,
+      "phone": phone,
+      "order_id": order_id
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
+    }
   }
 
 }

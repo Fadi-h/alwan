@@ -2,7 +2,9 @@
 
 import 'package:alwan/helper/api.dart';
 import 'package:alwan/helper/global.dart';
+import 'package:alwan/helper/store.dart';
 import 'package:alwan/model/start_up.dart';
+import 'package:alwan/view/main_class.dart';
 import 'package:alwan/view/sign_in.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
@@ -39,15 +41,23 @@ class IntroController extends GetxController{
           customerServiceList.value = data.customerService;
           searchSuggestionList.value = data.suggestionSearch;
           bannerList.value = data.banners;
-          print(categoriesList.length);
-          print(customerServiceList.length);
-          print(searchSuggestionList.length);
-          print(bannerList.length);
-          Future.delayed(const Duration(milliseconds: 2000 )).then((value){
-            Get.offAll(()=>SignIn());
+          Store.loadAddress();
+          Global.getUserInformation().then((value) {
+            if(Global.userId != -1){
+              Api.login(Global.username, Global.password).then((value) {
+                Get.offAll(()=>MainClass());
+              });
+            }else{
+              Get.offAll(()=>SignIn());
+            }
+
           });
+          // Future.delayed(const Duration(milliseconds: 2000 )).then((value){
+          //
+          // });
         });
       }else{
+        //todo no internet
         print('No internet +++++++++++++');
       }
     });

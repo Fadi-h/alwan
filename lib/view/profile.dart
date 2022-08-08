@@ -3,8 +3,11 @@ import 'package:alwan/controller/ProfileController.dart';
 import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/main_class_controller.dart';
 import 'package:alwan/helper/app.dart';
+import 'package:alwan/helper/global.dart';
 import 'package:alwan/helper/myTheme.dart';
 import 'package:alwan/view/address.dart';
+import 'package:alwan/view/address_2.dart';
+import 'package:alwan/view/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -53,22 +56,32 @@ class Profile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(height: 10),
-          GestureDetector(
-            onTap: () {
-              mainClassController.selectedIndex.value = 0;
-              mainClassController.pageController.animateToPage(0,
-                  duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.17,
-              height: MediaQuery.of(context).size.width * 0.17,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/icons/logo2.png')
-                  )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(onPressed: (){}, icon: Icon(Icons.logout ,color: Colors.transparent)),
+              GestureDetector(
+                onTap: () {
+                  mainClassController.selectedIndex.value = 0;
+                  mainClassController.pageController.animateToPage(0,
+                      duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.17,
+                  height: MediaQuery.of(context).size.width * 0.17,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/icons/logo2.png')
+                      )
+                  ),
+                ),
               ),
-            ),
+              Global.userId==-1
+                  ?  IconButton(onPressed: (){}, icon: Icon(Icons.logout ,color: Colors.transparent))
+                  :IconButton(onPressed: (){Global.logout();}, icon: Icon(Icons.logout ,color: MyTheme.isDarkTheme.value?Colors.white:Colors.black)),
+
+            ],
           ),
         ],
       ),
@@ -83,21 +96,38 @@ class Profile extends StatelessWidget {
           Column(
             children: [
               _slider(context),
-              const SizedBox(height: 30),
-              _optionBar(context),
-              const SizedBox(height: 25),
-              _contactHelp(context),
+              profileController.loading.value
+              ? _loading(context)
+              : Column(
+                children: [
+                  const SizedBox(height: 30),
+                  _optionBar(context),
+                  const SizedBox(height: 25),
+                  _contactHelp(context),
+                  const SizedBox(height: 35),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _socialMedia(context),
+                      _terms(context),
+                    ],
+                  ),
+                ],
+              )
+          
             ],
           ),
-          const SizedBox(height: 35),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _socialMedia(context),
-              _terms(context),
-            ],
-          ),
+
         ],
+      ),
+    );
+  }
+  _loading(BuildContext context){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height*0.4,
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
@@ -186,7 +216,7 @@ class Profile extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                Get.to(()=>Addresses());
+                Get.to(()=>Addresses_2(-1));
                 // Navigator.push(
                 //   context,
                 //   PageRouteBuilder(
@@ -272,8 +302,8 @@ class Profile extends StatelessWidget {
   _contactHelp(BuildContext context) {
     return Container(
      width: MediaQuery.of(context).size.width * 0.9,
-      height: 50,
-      child: Row(
+      // height: 50,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
@@ -281,7 +311,8 @@ class Profile extends StatelessWidget {
                 //todo
               },
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.55,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 50,
                 decoration: BoxDecoration(
                     color: Theme.of(context).disabledColor,
                     borderRadius: BorderRadius.circular(10)
@@ -306,12 +337,18 @@ class Profile extends StatelessWidget {
                 ),
               )
           ),
+          SizedBox(height: 10,),
           GestureDetector(
               onTap: () {
-                //todo
+                if(Global.userId == -1){
+                 Get.offAll(()=>SignIn());
+                }else{
+                  _showMyDialog(context);
+                }
               },
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 50,
                 decoration: BoxDecoration(
                     color: Theme.of(context).disabledColor,
                     borderRadius: BorderRadius.circular(10)
@@ -323,13 +360,12 @@ class Profile extends StatelessWidget {
                     Container(
                       width: 28,
                       height: 28,
-                      child: SvgPicture.asset("assets/icons/help.svg",
-                          color: Theme.of(context).backgroundColor
-                      ),
+                      child:Icon(Icons.update_outlined,color:!MyTheme.isDarkTheme.value ? Colors.white : Colors.black,size: 28,)
                     ),
                     const SizedBox(width: 10),
                     Center(
-                        child: Text(App_Localization.of(context).translate("help"),
+                        child: Text(App_Localization.of(context).translate("req_last_state"),
+
                         style: TextStyle(
                         fontSize: 16,
                         color: Theme.of(context).backgroundColor,
@@ -522,5 +558,62 @@ class Profile extends StatelessWidget {
     );
   }
 
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(App_Localization.of(context).translate("req_last_state")),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+              _note(context)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(App_Localization.of(context).translate("submit")),
+              onPressed: () {
+                Navigator.of(context).pop();
+                profileController.requsetLastStatment(context);
+              },
+            ),
+            TextButton(
+              child: Text(App_Localization.of(context).translate("cancel")),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _note(context){
+    return  Container(
+      width: MediaQuery.of(context).size.width * 0.4,
+      height: 55,
+      color: Colors.transparent,
+      child: TextField(
+        controller: profileController.note,
+        style: TextStyle(color: MyTheme.isDarkTheme.value ? Colors.black : Colors.white),
+        decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(width: 1, color: MyTheme.isDarkTheme.value ? Colors.black : Colors.white),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide:  BorderSide(width: 1, color: MyTheme.isDarkTheme.value ? Colors.black : Colors.white),
+            ),
+            label: Text(App_Localization.of(context).translate("note"),
+                style: TextStyle(color: MyTheme.isDarkTheme.value ?  Colors.black : Colors.white))
+        ),
+      ),
+    );
+  }
 
 }

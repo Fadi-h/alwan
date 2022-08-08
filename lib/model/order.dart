@@ -2,6 +2,8 @@
 //
 //     final order = orderFromMap(jsonString);
 
+import 'package:alwan/app_localization.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
@@ -78,6 +80,9 @@ class Order {
     "order_id": orderId,
     "shipping_request_count": shippingRequestCount,
   };
+  getState(BuildContext context) {
+    return App_Localization.of(context).translate("state" + state.toString());
+  }
 
   // factory Order.fromJson(Map<String, dynamic> json) => Order(
   //   id: json["id"],

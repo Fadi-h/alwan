@@ -91,13 +91,9 @@ class SignInController extends GetxController{
               if(done){
                 Global.storeUserInformation(
                     value.id,
-                    value.name,
-                    value.username,
-                    value.address1 ?? "",
-                    value.address2 ?? "",
-                    value.emirate ?? "",
-                    value.apartment ?? "",
-                    value.phone ??"");
+                    username.text,
+                    password.text,
+                 );
                 Get.snackbar(
                     'Successfully login',
                     'Welcome to alwan app',

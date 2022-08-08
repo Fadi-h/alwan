@@ -25,7 +25,7 @@ class OrderController extends GetxController{
         Api.getCustomerOrder(Global.userId.toString()).then((value){
           if(value.isNotEmpty){
             print('done');
-            myOrders.addAll(value);
+            myOrders.value = value;
             loading.value = false;
           }else{
             print('no orders');

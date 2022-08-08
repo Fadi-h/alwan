@@ -10,12 +10,15 @@ class Intro extends StatefulWidget {
 }
 
 class _IntroState extends State<Intro> {
-  IntroController introController = Get.put(IntroController());
-  ScrollController scrollController = ScrollController();
 
+  ScrollController scrollController = ScrollController();
+  IntroController introController = Get.put(IntroController());
 
   @override
   void initState() {
+
+    // introController.dispose();
+
     super.initState();
     Future.delayed(const Duration(milliseconds: 200)).then((value){
       scrollController.animateTo(

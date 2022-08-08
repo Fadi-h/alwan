@@ -5,6 +5,8 @@ import 'package:alwan/helper/app.dart';
 import 'package:alwan/main.dart';
 import 'package:alwan/view/contact_information.dart';
 import 'package:alwan/view/forget_password.dart';
+import 'package:alwan/view/home.dart';
+import 'package:alwan/view/main_class.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,15 @@ class _SignInState extends State<SignIn> {
   @override
   void initState()  {
      super.initState();
+    // Future.delayed(const Duration(milliseconds: 0)).then((value){
+    //   scrollController.animateTo(
+    //     scrollController.position.maxScrollExtent,
+    //     duration: const Duration(milliseconds: 6000),
+    //     curve: Curves.fastOutSlowIn,
+    //   );
+    // });
+  }
+  _SignInState(){
     Future.delayed(const Duration(milliseconds: 0)).then((value){
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
@@ -216,7 +227,7 @@ class _SignInState extends State<SignIn> {
         GestureDetector(
           onTap: (){
             FocusManager.instance.primaryFocus?.unfocus();
-
+            Get.to(()=>MainClass());
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
