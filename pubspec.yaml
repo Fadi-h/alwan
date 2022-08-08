@@ -52,6 +52,8 @@ dependencies:
   firebase_core: ^1.20.0
   firebase_messaging: ^12.0.1
   flutter_local_notifications:
+  advance_pdf_viewer: ^2.0.1
+  flutter_pdfview:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

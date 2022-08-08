@@ -1,10 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:alwan/app_localization.dart';
 import 'package:alwan/helper/api.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/global.dart';
 import 'package:alwan/view/sign_in.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class ProfileController extends GetxController {
 
@@ -12,7 +18,6 @@ class ProfileController extends GetxController {
     var note = TextEditingController();
 
     requsetLastStatment(BuildContext context){
-
       if(Global.userId==-1){
         Get.offAll(()=>SignIn());
       }else{
@@ -27,5 +32,20 @@ class ProfileController extends GetxController {
           }
         });
       }
+    }
+
+    Future<File> loadPdf() async {
+      Completer<File> completer = Completer();
+      final url = Global.user!.financialState;
+      final filename = url.substring(url.lastIndexOf("/") + 1);
+      var request = await HttpClient().getUrl(Uri.parse(url));
+      var response = await request.close();
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/$filename");
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+      return completer.future;
+
     }
 }

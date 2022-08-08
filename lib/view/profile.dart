@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:alwan/app_localization.dart';
 import 'package:alwan/controller/ProfileController.dart';
 import 'package:alwan/controller/intro_controller.dart';
@@ -5,13 +7,16 @@ import 'package:alwan/controller/main_class_controller.dart';
 import 'package:alwan/helper/app.dart';
 import 'package:alwan/helper/global.dart';
 import 'package:alwan/helper/myTheme.dart';
-import 'package:alwan/view/address.dart';
 import 'package:alwan/view/address_2.dart';
+import 'package:alwan/view/pdf_viwer.dart';
 import 'package:alwan/view/sign_in.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class Profile extends StatelessWidget {
 
@@ -165,10 +170,22 @@ class Profile extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () {
-                mainClassController.selectedIndex.value = 1;
-                mainClassController.pageController.animateToPage(1,
-                    duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
+              onTap: () async {
+                  if(Global.user!=null){
+                  print('not null ---');
+                    if(Global.user!.financialState.length > 0){
+                      profileController.loading.value = true;
+                      profileController.loadPdf().then((value){
+                        var pdf = value.path;
+                        profileController.loading.value = false;
+                       // Get.to(()=>PdfViewerPage(pdf));
+                      });
+
+                  }
+                }
+                // mainClassController.selectedIndex.value = 1;
+                // mainClassController.pageController.animateToPage(1,
+                //     duration: const Duration(milliseconds: 700), curve: Curves.fastOutSlowIn);
                 // Navigator.push(
                 //   context,
                 //   PageRouteBuilder(
@@ -192,7 +209,8 @@ class Profile extends StatelessWidget {
                           Colors.black
                       ),
                     ),
-                    Center(child: Text(App_Localization.of(context).translate("my_invoice"),
+                    Center(
+                        child: Text(App_Localization.of(context).translate("my_invoice"),
                         style: TextStyle(
                           color: MyTheme.isDarkTheme.value ? Colors.white :
                           Colors.black,
@@ -200,7 +218,6 @@ class Profile extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         )
                     )
-
                     )
                   ],
                 ),
