@@ -25,7 +25,7 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
     // final name = basename(widget.src.path);
     return Scaffold(
       appBar: AppBar(
-        title: Text('fadi'),
+        title: Text(''),
       ),
       body: Center(
           child:  PDFView(

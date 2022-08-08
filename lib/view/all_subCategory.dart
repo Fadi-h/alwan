@@ -24,6 +24,7 @@ class AllSubCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Obx((){
       return Scaffold(
         body: SafeArea(

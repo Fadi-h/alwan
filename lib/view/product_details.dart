@@ -1,4 +1,5 @@
 import 'package:alwan/app_localization.dart';
+import 'package:alwan/controller/intro_controller.dart';
 import 'package:alwan/controller/product_details_controller.dart';
 import 'package:alwan/controller/product_list_controller.dart';
 import 'package:alwan/controller/sign_in_controller.dart';
@@ -17,7 +18,7 @@ class ProductDetails extends StatelessWidget {
   ProductList product;
   // ProductDetails(this.product, {Key? key}) : super(key: key);
   ProductDetailsController productDetailsController = Get.put(ProductDetailsController());
-  SignInController signInController = Get.find();
+  IntroController introController = Get.find();
   ProductDetails(this.product) {
     productDetailsController.getData(product.id);
   }
@@ -208,7 +209,7 @@ class ProductDetails extends StatelessWidget {
   }
   _contactOption(context){
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(right: 20,left: 20,bottom: 10),
       child: Stack(
         children: [
           Row(
@@ -216,13 +217,13 @@ class ProductDetails extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: (){
-                 signInController.showWhatsAppList.value = true;
+                introController.showWhatsAppList.value = true;
                  Get.to(()=>ContactInformation());
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 400),
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                       color: MyTheme.isDarkTheme.value ? Colors.white : App.darkGrey,
                       //shape: BoxShape.circle
@@ -232,8 +233,8 @@ class ProductDetails extends StatelessWidget {
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 400),
                         child: SizedBox(
-                            width: 35,
-                            height: 35,
+                            width: 30,
+                            height: 30,
                             child: AnimatedSwitcher(
                               duration: const Duration(milliseconds: 400),
                               child:  SvgPicture.asset('assets/icons/whatsapp-green.svg'),
@@ -245,19 +246,19 @@ class ProductDetails extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: (){
-                  signInController.showPhoneList.value = true;
+                  introController.showPhoneList.value = true;
                   Get.to(()=>ContactInformation());
                 },
                 child: Container(
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   //   margin: const EdgeInsets.only(bottom: 50),
                   decoration: BoxDecoration(
                       color: MyTheme.isDarkTheme.value ? Colors.white : App.darkGrey,
                       shape: BoxShape.circle
                   ),
                   child: Center(
-                    child: Icon(Icons.phone,size: 35,
+                    child: Icon(Icons.phone,size: 30,
                       color: MyTheme.isDarkTheme.value ? Colors.black : Colors.white,
                     ),
                   ),

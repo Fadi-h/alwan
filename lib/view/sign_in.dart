@@ -347,7 +347,7 @@ class _SignInState extends State<SignIn> {
               // ),
               GestureDetector(
                 onTap: (){
-                  signInController.showWhatsAppList.value = true;
+                  introController.showWhatsAppList.value = true;
                   Navigator.push(
                     context,
                     PageRouteBuilder(
@@ -369,7 +369,7 @@ class _SignInState extends State<SignIn> {
               ),
               GestureDetector(
                 onTap: (){
-                  signInController.showPhoneList.value = true;
+                  introController.showPhoneList.value = true;
                   Navigator.push(
                     context,
                     PageRouteBuilder(

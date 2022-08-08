@@ -178,9 +178,8 @@ class Profile extends StatelessWidget {
                       profileController.loadPdf().then((value){
                         var pdf = value.path;
                         profileController.loading.value = false;
-                       // Get.to(()=>PdfViewerPage(pdf));
+                        Get.to(()=>PdfViewerPage(pdf));
                       });
-
                   }
                 }
                 // mainClassController.selectedIndex.value = 1;

@@ -13,15 +13,15 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class ContactInformation extends StatelessWidget {
 
   IntroController introController = Get.find();
-  SignInController signInController = Get.find();
+  // SignInController signInController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     introController.contactIndex.value = 0;
     return WillPopScope(
       onWillPop: () async {
-        signInController.showPhoneList.value = false;
-        signInController.showWhatsAppList.value = false;
+        introController.showPhoneList.value = false;
+        introController.showWhatsAppList.value = false;
         return true;
       },
       child: Scaffold(
@@ -57,8 +57,8 @@ class ContactInformation extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          signInController.showPhoneList.value = false;
-                          signInController.showWhatsAppList.value = false;
+                          introController.showPhoneList.value = false;
+                          introController.showWhatsAppList.value = false;
                           Get.back();
                         },
                         child: Container(
@@ -136,10 +136,10 @@ class ContactInformation extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: (){
-                                  if (signInController.showWhatsAppList.isTrue){
-                                    signInController.openWhatApp(context, "We Need Some Information",introController.customerServiceList[introController.contactIndex.value].phone);
-                                  }else if (signInController.showPhoneList.value){
-                                    signInController.openPhone(introController.customerServiceList[introController.contactIndex.value].phone);
+                                  if (introController.showWhatsAppList.isTrue){
+                                    introController.openWhatApp(context, "We Need Some Information",introController.customerServiceList[introController.contactIndex.value].phone);
+                                  }else if (introController.showPhoneList.value){
+                                    introController.openPhone(introController.customerServiceList[introController.contactIndex.value].phone);
                                   }
                                 },
                                 child: Container(
@@ -150,7 +150,7 @@ class ContactInformation extends StatelessWidget {
                                       Colors.white : Colors.black,
                                       shape: BoxShape.circle
                                   ),
-                                  child: signInController.showWhatsAppList.isTrue ?
+                                  child: introController.showWhatsAppList.isTrue ?
                                   Center(child: SvgPicture.asset('assets/icons/whatsapp-green.svg',width: 30,height: 30,))
                                   : Center(
                                     child: Icon(Icons.phone,size: 30,
